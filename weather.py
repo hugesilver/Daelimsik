@@ -36,61 +36,49 @@ else:
     if(weather_main == "Thunderstorm"):
         m_weather.write("대림대학교에 뇌우가 칠 예정이에요!\\n")
         m_weather.write("외출 시 우산 잊지 마시고, 아끼는 옷과 신발은 자제해주세요!\\n")
-
-    # 이슬비
-    elif(weather_main == "Drizzle"):
-        m_weather.write("대림대학교에 이슬비가 내릴 예정이에요!\\n")
-
-    # 우천
-    elif(weather_main == "Rain"):
-        m_weather.write("대림대학교에 비가 내릴 예정이에요!\\n")
-        m_weather.write("외출 시 우산 잊지 마세요!\\n")
-
-    # 눈
-    elif(weather_main == "Snow"):
-        m_weather.write("대림대학교에 눈이 내릴 예정이에요!\\n")
-        m_weather.write("빙판길 조심하세요!\\n")
-
-    # 안개
-    elif(weather_main == "Mist" or "Haze" or "Fog"):
-        m_weather.write("대림대학교에 안개가 낄 예정이에요!\\n")
-        m_weather.write("특히 운전하시는 분들은 안전에 유의하세요!\\n")
-
-    # 황사
-    elif(weather_main == "Dust" or "Sand"):
-        m_weather.write("대림대학교에 황사가 낄 예정이에요!\\n")
-        m_weather.write("황사마스크 혹은 미세먼지 마스크 잊지마세요!\\n")
-
-    # 스모크
-    elif(weather_main == "Smoke"):
-        m_weather.write("대림대학교에 연기(스모크)로 자욱할 예정이에요!\\n")
-        m_weather.write("안전에 유의하세요!\\n")
-
-    # 화산재(쓸 일이 있나?)
-    elif(weather_main == "Ash"):
-        m_weather.write("대림대학교에 화산재로 자욱할 예정이에요!\\n")
-        m_weather.write("안전에 유의하세요!\\n")
-
-    # 돌풍
-    elif(weather_main == "Squall"):
-        m_weather.write("대림대학교에 돌풍 불 예정이에요!\\n")
-        m_weather.write("날아가지 않도록 유의하세요!\\n")
-
-    # 토네이도
-    elif(weather_main == "Tornado"):
-        m_weather.write("대림대학교에 태풍이 올 예정이에요!\\n")
-        m_weather.write("강의 후 되도록이면 실내에 피신하세요!\\n")
-
     # 맑음
     elif(weather_main == "Clear"):
         m_weather.write("대림대학교에 화창한 날씨가 예정되어있어요!\\n")
         m_weather.write("피크닉하기 좋은 날씨에요! 몰론 강의가 최우선이지만요!\\n")
-
+    # 비
+    elif(weather_main == "Rain"):
+        m_weather.write("대림대학교에 비가 내릴 예정이에요!\\n")
+        m_weather.write("외출 시 우산 잊지 마세요!\\n")
     # 흐림
-    elif (weather_main == "Clouds"):
+    elif(weather_main == "Clouds"):
         m_weather.write("대림대학교에 흐린 날씨가 예정되어있어요!\\n")
-
-    # 알 수 없음
+    # 눈
+    elif(weather_main == "Snow"):
+        m_weather.write("대림대학교에 눈이 내릴 예정이에요!\\n")
+        m_weather.write("빙판길 조심하세요!\\n")
+    # 이슬비
+    elif(weather_main == "Drizzle"):
+        m_weather.write("대림대학교에 이슬비가 내릴 예정이에요!\\n")
+    # 안개
+    elif(weather_main == "Mist" or "Haze" or "Fog"):
+        m_weather.write("대림대학교에 안개가 낄 예정이에요!\\n")
+        m_weather.write("특히 운전하시는 분들은 안전에 유의하세요!\\n")
+    # 황사
+    elif(weather_main == "Dust" or "Sand"):
+        m_weather.write("대림대학교에 황사가 낄 예정이에요!\\n")
+        m_weather.write("황사마스크 혹은 미세먼지 마스크 잊지마세요!\\n")
+    # 스모크
+    elif(weather_main == "Smoke"):
+        m_weather.write("대림대학교에 연기(스모크)로 자욱할 예정이에요!\\n")
+        m_weather.write("안전에 유의하세요!\\n")
+    # 화산재
+    elif(weather_main == "Ash"):
+        m_weather.write("대림대학교에 화산재로 자욱할 예정이에요!\\n")
+        m_weather.write("안전에 유의하세요!\\n")
+    # 돌풍
+    elif(weather_main == "Squall"):
+        m_weather.write("대림대학교에 돌풍이 불 예정이에요!\\n")
+        m_weather.write("날아가지 않도록 유의하세요!\\n")
+    # 토네이도 혹은 태풍
+    elif(weather_main == "Tornado"):
+        m_weather.write("대림대학교에 태풍이 올 예정이에요!\\n")
+        m_weather.write("강의 후 되도록이면 실내에 피신하세요!\\n")
+    # ???
     else:
         m_weather.write("알 수 없는 이유로 인해 날씨를 못 불러왔어요...\\n")
 

@@ -18,7 +18,7 @@ notes = 'tbody > tr:nth-child(10) > td'
 
 m_1480 = open("./data/m_profstaff.json", 'w')
 
-m_1480.write('{\n\t"version": "2.0",\n\t"template": {\n\t\t"outputs": [\n\t\t\t{\n\t\t\t\t"simpleText": {\n\t\t\t\t\t"text": "')
+m_1480.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_1480.write("[대림식 알림]\\n")
 m_1480.write("\\n")
 m_1480.write("{} 주간 식단 중:\\n".format(weekdate))
@@ -48,5 +48,5 @@ else:
         m_1480.write("\\n")
 
 m_1480.write("담당부서: 사무운영팀 | 031-467-4752")
-m_1480.write('"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}')
+m_1480.write('"}}]}}')
 m_1480.close()

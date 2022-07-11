@@ -8,7 +8,7 @@ weekday_number = today.weekday() # 월요일 0 일요일 6
 
 m_weather = open("./data/m_weather.json", 'w')
 
-m_weather.write('{\n\t"version": "2.0",\n\t"template": {\n\t\t"outputs": [\n\t\t\t{\n\t\t\t\t"simpleText": {\n\t\t\t\t\t"text": "')
+m_weather.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_weather.write("[대림식 알림]\\n")
 m_weather.write("\\n")
 m_weather.write("{}년 {}월 {}일 {} 대림대학교 날씨입니다.\\n".format(today.year, today.month, today.day, days[weekday_number]))
@@ -24,13 +24,13 @@ if(openweathermap.status_code != 200):
 else:
     weather_json = json.loads(openweathermap.text)
 
-    weather_main = weather_json["list"][0]["weather"][0]["main"]
-    weather_temp = weather_json["list"][0]["main"]["temp"]
-    weather_temp_feels_like = weather_json["list"][0]["main"]["feels_like"]
-    weather_temp_min = weather_json["list"][0]["main"]["temp_min"]
-    weather_temp_max = weather_json["list"][0]["main"]["temp_max"]
-    weather_humidity = weather_json["list"][0]["main"]["humidity"]
-    weather_pop = weather_json["list"][0]["pop"]
+    weather_main = weather_json["list"][1]["weather"][0]["main"]
+    weather_temp = weather_json["list"][1]["main"]["temp"]
+    weather_temp_feels_like = weather_json["list"][1]["main"]["feels_like"]
+    weather_temp_min = weather_json["list"][1]["main"]["temp_min"]
+    weather_temp_max = weather_json["list"][1]["main"]["temp_max"]
+    weather_humidity = weather_json["list"][1]["main"]["humidity"]
+    weather_pop = weather_json["list"][1]["pop"]
 
     # 뇌우
     if(weather_main == "Thunderstorm"):
@@ -83,7 +83,7 @@ else:
         m_weather.write("알 수 없는 이유로 인해 날씨를 못 불러왔어요...\\n")
 
     m_weather.write("\\n")
-    m_weather.write("({}년 {}월 {}일 {}시 기준)\\n".format(today.year, today.month, today.day, datetime.now().hour))
+    m_weather.write("({}년 {}월 {}일 {}시 기준)\\n".format(today.year, today.month, today.day, (datetime.now().hour) + 3))
     m_weather.write("현재 기온: {}°C\\n".format(int(weather_temp)))
     m_weather.write("체감 온도: {}°C\\n".format(int(weather_temp_feels_like)))
     m_weather.write("현재 습도: {}%\\n".format(int(weather_humidity)))
@@ -98,5 +98,5 @@ else:
         m_weather.write("체감 온도가 35도 이상이에요!\\n")
         m_weather.write("건강의 유의하여 주시고, 수분 보충을 꾸준히 해주세요!")
 
-m_weather.write('"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}')
+m_weather.write('"}}]}}')
 m_weather.close()

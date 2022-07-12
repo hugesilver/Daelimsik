@@ -11,8 +11,8 @@ m_weather = open("./data/m_weather.json", 'w')
 m_weather.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_weather.write("[대림식 알림]\\n")
 m_weather.write("\\n")
-m_weather.write("{}년 {}월 {}일 {}\\n".format(today.year, today.month, today.day, days[weekday_number]))
-m_weather.write("대림대학교 날씨입니다.\\n")
+m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day, (datetime.now().hour) + 3))
+m_weather.write("대림대학교 날씨를 알려드릴게요.\\n")
 m_weather.write("\\n")
 
 API_key = ""
@@ -83,21 +83,20 @@ else:
     else:
         m_weather.write("알 수 없는 이유로 인해 날씨를 못 불러왔어요...\\n")
 
-    m_weather.write("\\n")
-    m_weather.write("({}년 {}월 {}일 {}시 기준)\\n".format(today.year, today.month, today.day, (datetime.now().hour) + 3))
-    m_weather.write("현재 기온: {}°C\\n".format(int(weather_temp)))
-    m_weather.write("체감 온도: {}°C\\n".format(int(weather_temp_feels_like)))
-    m_weather.write("현재 습도: {}%\\n".format(int(weather_humidity)))
-    m_weather.write("\\n")
-    m_weather.write("최저 기온: {}°C\\n".format(int(weather_temp_min)))
-    m_weather.write("최고 기온: {}°C\\n".format(int(weather_temp_max)))
-    m_weather.write("강수 확률: {}%".format(int(weather_pop * 100)))
+m_weather.write("\\n")
+m_weather.write("기온: {}°C\\n".format(int(weather_temp)))
+m_weather.write("습도: {}%\\n".format(int(weather_humidity)))
+m_weather.write("체감 온도: {}°C\\n".format(int(weather_temp_feels_like)))
+m_weather.write("\\n")
+m_weather.write("최저 기온: {}°C\\n".format(int(weather_temp_min)))
+m_weather.write("최고 기온: {}°C\\n".format(int(weather_temp_max)))
+m_weather.write("강수 확률: {}%".format(int(weather_pop * 100)))
 
-    if((weather_main == ("Clear" or "Clouds")) and int(weather_temp_feels_like) >= 35):
-        m_weather.write("\\n")
-        m_weather.write("\\n")
-        m_weather.write("체감 온도가 35도 이상이에요!\\n")
-        m_weather.write("건강의 유의하여 주시고, 수분 보충을 꾸준히 해주세요!")
+if((weather_main == ("Clear" or "Clouds")) and int(weather_temp_feels_like) >= 35):
+    m_weather.write("\\n")
+    m_weather.write("\\n")
+    m_weather.write("체감 온도가 35도 이상이에요!\\n")
+    m_weather.write("건강의 유의하여 주시고, 수분 보충을 꾸준히 해주세요!")
 
 m_weather.write('"}}]}}')
 m_weather.close()

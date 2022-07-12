@@ -11,7 +11,8 @@ m_weather = open("./data/m_weather.json", 'w')
 m_weather.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_weather.write("[대림식 알림]\\n")
 m_weather.write("\\n")
-m_weather.write("{}년 {}월 {}일 {} 대림대학교 날씨입니다.\\n".format(today.year, today.month, today.day, days[weekday_number]))
+m_weather.write("{}년 {}월 {}일 {}\\n".format(today.year, today.month, today.day, days[weekday_number]))
+m_weather.write("대림대학교 날씨입니다.\\n")
 m_weather.write("\\n")
 
 API_key = ""

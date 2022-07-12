@@ -11,10 +11,6 @@ m_weather = open("./data/m_weather.json", 'w')
 m_weather.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_weather.write("[대림식 알림]\\n")
 m_weather.write("\\n")
-if(((datetime.now().hour) + 3) >= 21):
-    m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day + 1, datetime.now().hour + 3 - 24))
-else:
-    m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day, (datetime.now().hour) + 3))
 m_weather.write("대림대학교 날씨를 알려드릴게요.\\n")
 m_weather.write("\\n")
 
@@ -26,6 +22,7 @@ openweathermap = requests.get("https://api.openweathermap.org/data/2.5/forecast?
 if(openweathermap.status_code != 200):
     m_weather.write("날씨 정보를 불러오는 중 실패하였습니다: {}", openweathermap.status_code)
 else:
+    m_weather.write("{}년 {}월 {}일 {}시 기준 3시간 뒤에는...\\n".format(today.year, today.month, today.day, datetime.now().hour))
     weather_json = json.loads(openweathermap.text)
 
     weather_main = weather_json["list"][1]["weather"][0]["main"]

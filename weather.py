@@ -11,7 +11,10 @@ m_weather = open("./data/m_weather.json", 'w')
 m_weather.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_weather.write("[대림식 알림]\\n")
 m_weather.write("\\n")
-m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day, (datetime.now().hour) + 3))
+if(((datetime.now().hour) + 3) >= 21):
+    m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day + 1, 24 - ((datetime.now().hour) + 3)))
+else:
+    m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day, (datetime.now().hour) + 3))
 m_weather.write("대림대학교 날씨를 알려드릴게요.\\n")
 m_weather.write("\\n")
 

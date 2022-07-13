@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "Hello It's Daelimsik"
+    return "<h2>Hello It's Daelimsik</h2>"
 
 @app.route('/student', methods=["POST"])
 def student():
@@ -25,5 +25,17 @@ def weather():
         m_weather = json.load(weather)
     return m_weather
 
+@app.route('/bachelor', methods=["POST"])
+def bachelor():
+    with open('./data/l_bachelor.json', 'r') as bachelor:
+        l_bachelor = json.load(bachelor)
+    return l_bachelor
+
+@app.route('/scholarship', methods=["POST"])
+def scholarship():
+    with open('./data/l_scholarship.json', 'r') as scholarship:
+        l_scholarship = json.load(scholarship)
+    return l_scholarship
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port= "", debug=True)
+    app.run(host='0.0.0.0', port="", debug=True)

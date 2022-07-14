@@ -59,7 +59,7 @@ f990.close()
 
 soup = BeautifulSoup(html, 'html.parser')
 
-m_990 = open("./data/l_scholar.json", 'w')
+m_990 = open("./data/l_scholarship.json", 'w')
 
 m_990.write('{"version": "2.0","template": {"outputs": [{"listCard": {"header": {"title": "대림대학교 장학 및 대출공지"},"items": [')
 

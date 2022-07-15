@@ -24,7 +24,7 @@ plus = 'tbody > tr:nth-child(9) > td:nth-child({})'.format(weekday_number + 2)
 
 m_1470 = open("./data/m_student.json", 'w')
 
-m_1470.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
+m_1470.write('{"contents": [{"type": "card.text", "cards": [{"description": "')
 m_1470.write("[대림식 알림]\\n")
 m_1470.write("\\n")
 m_1470.write("{}년 {}월 {}일 {}\\n".format(today.year, today.month, today.day, days[weekday_number]))
@@ -90,5 +90,5 @@ else:
         m_1470.write("\\n")
 
 m_1470.write("담당부서: 사무운영팀(031-467-4752)")
-m_1470.write('"}}]}}')
+m_1470.write('", "buttons": [{"type": "url", "label": "주간 식단 전체보기", "data": {"url": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=1470"}}]}]}]}')
 m_1470.close()

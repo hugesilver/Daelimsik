@@ -38,7 +38,7 @@ def scholarship():
     return l_scholarship
 
 @app.route('/administrative', methods=["POST"])
-def scholarship():
+def administrative():
     with open('./data/l_administrative.json', 'r') as administrative:
         l_administrative = json.load(administrative)
     return l_administrative

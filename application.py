@@ -37,5 +37,11 @@ def scholarship():
         l_scholarship = json.load(scholarship)
     return l_scholarship
 
+@app.route('/administrative', methods=["POST"])
+def scholarship():
+    with open('./data/l_administrative.json', 'r') as administrative:
+        l_administrative = json.load(administrative)
+    return l_administrative
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port="", debug=True)

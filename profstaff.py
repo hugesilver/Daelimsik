@@ -32,13 +32,13 @@ else:
     # [주간]
     if (soup.select_one(lunch).get_text()) != "":
         m_1480.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(1) > th:nth-child(1)').get_text()))
-        m_1480.write((soup.select_one(lunch).get_text()).replace('\n', '\\n'))
+        m_1480.write((soup.select_one(lunch).get_text()).replace('\n', '\\n') + "\\n")
         m_1480.write("\\n")
 
     # [석식]
     if (soup.select_one(dinner).get_text()) != "":
         m_1480.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(2) > th:nth-child(1)').get_text()))
-        m_1480.write((soup.select_one(dinner).get_text()).replace('\n', '\\n'))
+        m_1480.write((soup.select_one(dinner).get_text()).replace('\n', '\\n') + "\\n")
         m_1480.write("\\n")
 
     # [비고]

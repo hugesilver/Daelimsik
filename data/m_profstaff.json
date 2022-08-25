@@ -1,21 +1,12 @@
 {
-    "contents": [
-        {
-            "type": "card.text",
-            "cards":[
-                {
-                    "description":"",
-                    "buttons":[
-                        {
-                            "type":"url",
-                            "label":"",
-                            "data":{
-                                "url": ""
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+	"version": "2.0",
+	"template": {
+		"outputs": [
+			{
+				"simpleText": {
+					"text": ""
+				}
+			}
+		]
+	}
 }

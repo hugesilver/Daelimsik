@@ -22,7 +22,7 @@ openweathermap = requests.get("https://api.openweathermap.org/data/2.5/forecast?
 if(openweathermap.status_code != 200):
     m_weather.write("날씨 정보를 불러오는 중 실패하였습니다: {}", openweathermap.status_code)
 else:
-    m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day, datetime.now().hour))
+    m_weather.write("{}년 {}월 {}일 {}시 기준\\n".format(today.year, today.month, today.day, str(datetime.now().hour).zfill(2)))
     m_weather.write("3시간 뒤에는...\\n")
     weather_json = json.loads(openweathermap.text)
 

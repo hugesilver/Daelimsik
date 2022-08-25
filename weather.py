@@ -99,5 +99,11 @@ if((weather_main == ("Clear" or "Clouds")) and int(weather_temp_feels_like) >= 3
     m_weather.write("체감 온도가 35도 이상이에요!\\n")
     m_weather.write("건강의 유의하여 주시고, 수분 보충을 꾸준히 해주세요!")
 
+if((weather_main == ("Clear" or "Clouds" or "Snow")) and int(weather_temp_feels_like) <= -18):
+    m_weather.write("\\n")
+    m_weather.write("\\n")
+    m_weather.write("체감 온도가 -18도 이하에요!\\n")
+    m_weather.write("감기와 동상의 유의하고, 체온에 신경써주세요!")
+
 m_weather.write('"}}]}}')
 m_weather.close()

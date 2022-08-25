@@ -51,57 +51,66 @@ else:
     if (soup.select_one(corner1).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(1) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(corner1).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(corner1).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Corner2]
     if (soup.select_one(corner2).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(2) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(corner2).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(corner2).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Corner3]
     if (soup.select_one(corner3).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(3) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(corner3).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(corner3).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Corner4]
     if (soup.select_one(corner4).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(4) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(corner4).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(corner4).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Corner5]
     if (soup.select_one(corner5).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(5) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(corner5).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(corner5).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Corner6]
     if (soup.select_one(corner6).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(6) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(corner6).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(corner6).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Daelim Cook]
     if (soup.select_one(daelimcook).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(7) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(daelimcook).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(daelimcook).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [Dellibus]
     if (soup.select_one(dellibus).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(8) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(dellibus).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(dellibus).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
     # [PLUS+]
     if (soup.select_one(plus).get_text()) != "":
         m_1470.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(9) > th:nth-child(1)').get_text()))
         m_1470.write((soup.select_one(plus).get_text()).replace('\n', '\\n') + "\\n")
-        m_1470.write("\\n")
+        if ((soup.select_one(plus).get_text())[-1] != "\n"):
+            m_1470.write("\\n")
 
-m_1470.write("* 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n* 식당 상황에 따라 메뉴가 변경될 수 있습니다.\\n\\n담당부서: 사무운영팀(031-467-4752)")
+m_1470.write("* 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n* 식당 상황에 따라 메뉴가 변경될 수 있습니다.\\n\\n담당부서: 사무운영팀(031-467-4752)\\n전체 메뉴: https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=1470")
 m_1470.write('"}}]}}')
 m_1470.close()
 
@@ -138,20 +147,23 @@ else:
     if (soup.select_one(lunch).get_text()) != "":
         m_1480.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(1) > th:nth-child(1)').get_text()))
         m_1480.write((soup.select_one(lunch).get_text()).replace('\n', '\\n') + "\\n")
-        m_1480.write("\\n")
+        if((soup.select_one(lunch).get_text())[-1] != "\n"):
+            m_1480.write("\\n")
 
     # [석식]
     if (soup.select_one(dinner).get_text()) != "":
         m_1480.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(2) > th:nth-child(1)').get_text()))
         m_1480.write((soup.select_one(dinner).get_text()).replace('\n', '\\n') + "\\n")
-        m_1480.write("\\n")
+        if ((soup.select_one(dinner).get_text())[-1] != "\n"):
+            m_1480.write("\\n")
 
     # [비고]
     if (soup.select_one(notes).get_text()) != "":
         m_1480.write("[{}]\\n".format(soup.select_one('tbody > tr:nth-child(10) > th:nth-child(1)').get_text()))
         m_1480.write((soup.select_one(notes).get_text()).replace('\n', '\\n') + "\\n")
-        m_1480.write("\\n")
+        if ((soup.select_one(notes).get_text())[-1] != "\n"):
+            m_1480.write("\\n")
 
-m_1480.write("* 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n* 식당 상황에 따라 메뉴가 변경될 수 있습니다.\\n\\n담당부서: 사무운영팀(031-467-4752)")
+m_1480.write("* 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n* 식당 상황에 따라 메뉴가 변경될 수 있습니다.\\n\\n담당부서: 사무운영팀(031-467-4752)\\n전체 메뉴: https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=1480")
 m_1480.write('"}}]}}')
 m_1480.close()

@@ -44,7 +44,7 @@ def administrative():
     return l_administrative
 
 @app.route('/schedule', methods=["POST"])
-def administrative():
+def schedule():
     with open('./data/m_schedule.json', 'r') as schedule:
         m_schedule = json.load(schedule)
     return m_schedule

@@ -29,7 +29,7 @@ for i in range(5):
         m_900.write('"[공지] ')
     else:
         m_900.write('"')
-    m_900.write('{}",'.format(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a').get_text()))
+    m_900.write('{}",'.format((soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a').get_text())).replace('"', '\"'))
     m_900.write('"description": "{}",'.format(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtInfo > .date').get_text()))
     m_900.write('"link": {')
     m_900.write('"web": "{}"'.format("https://www.daelim.ac.kr" + ((((str(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a')).split())[6])[6:])[:-1]).replace("amp;", "")))
@@ -65,7 +65,7 @@ for i in range(5):
         m_990.write('"[공지] ')
     else:
         m_990.write('"')
-    m_990.write('{}",'.format(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a').get_text()))
+    m_990.write('{}",'.format((soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a').get_text())).replace('"', '\"'))
     m_990.write('"description": "{}",'.format(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtInfo > .date').get_text()))
     m_990.write('"link": {')
     m_990.write('"web": "{}"'.format("https://www.daelim.ac.kr" + ((((str(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a')).split())[6])[6:])[:-1]).replace("amp;", "")))
@@ -102,7 +102,7 @@ for i in range(5):
     else:
         m_30.write('"')
     m_30.write('{}",'.format(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a').get_text()))
-    m_30.write('"description": "{}",'.format(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtInfo > .date').get_text()))
+    m_30.write('"description": "{}",'.format((soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtInfo > .date').get_text())).replace('"', '\"'))
     m_30.write('"link": {')
     m_30.write('"web": "{}"'.format("https://www.daelim.ac.kr" + ((((str(soup.select_one('#tbody > li:nth-child(' + str(i + 1) + ') > .txtL > a')).split())[6])[6:])[:-1]).replace("amp;", "")))
     m_30.write('}')

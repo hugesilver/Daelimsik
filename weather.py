@@ -33,6 +33,8 @@ else:
     weather_temp_max = weather_json["list"][1]["main"]["temp_max"]
     weather_humidity = weather_json["list"][1]["main"]["humidity"]
     weather_pop = weather_json["list"][1]["pop"]
+    weather_rain = weather_json["list"][1]["rain"]["3h"]
+    weather_snow = weather_json["list"][1]["snow"]["3h"]
 
     # 뇌우
     if(weather_main == "Thunderstorm"):
@@ -92,6 +94,16 @@ m_weather.write("\\n")
 m_weather.write("최저 기온: {}°C\\n".format(int(weather_temp_min)))
 m_weather.write("최고 기온: {}°C\\n".format(int(weather_temp_max)))
 m_weather.write("강수 확률: {}%".format(int(weather_pop * 100)))
+
+if(weather_main == ("Thunderstorm" or "Rain")):
+    m_weather.write("\\n")
+    m_weather.write("\\n")
+    m_weather.write("강수량: {}mm".format(str(weather_rain)))
+
+if(weather_main == "Snow"):
+    m_weather.write("\\n")
+    m_weather.write("\\n")
+    m_weather.write("강설량: {}mm".format(str(weather_snow)))
 
 if((weather_main == ("Clear" or "Clouds")) and int(weather_temp_feels_like) >= 35):
     m_weather.write("\\n")

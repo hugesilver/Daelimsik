@@ -114,7 +114,7 @@ else:
             if ((soup.select_one(plus).get_text())[-1] != "\n"):
                 m_1470.write("\\n")
 
-m_1470.write("* 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n* 식당 상황에 따라 메뉴가 변경될 수 있습니다.\\n\\n담당부서: 사무운영팀(031-467-4752)")
+m_1470.write("※ 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
 m_1470.write('"}}],"quickReplies":[{"action": "block", "messageText": "전체 메뉴보기", "label": "전체 메뉴보기", "blockId": "63098b155ce7b2313afc191b"}]}}')
 m_1470.close()
 
@@ -172,6 +172,6 @@ else:
             if ((soup.select_one(notes).get_text())[-1] != "\n"):
                 m_1480.write("\\n")
 
-m_1480.write("* 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n* 식당 상황에 따라 메뉴가 변경될 수 있습니다.\\n\\n담당부서: 사무운영팀(031-467-4752)")
+m_1480.write("※ 식단 데이터는 매일 오전 9시 30분에 업데이트됩니다.\\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
 m_1480.write('"}}],"quickReplies":[{"action": "block", "messageText": "전체 메뉴보기", "label": "전체 메뉴보기", "blockId": "63098b155ce7b2313afc191b"}]}}')
 m_1480.close()

@@ -1,0 +1,21 @@
+{
+    "contents": [
+        {
+            "type": "card.text",
+            "cards":[
+                {
+                    "description":"",
+                    "buttons":[
+                        {
+                            "type":"url",
+                            "label":"",
+                            "data":{
+                                "url": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

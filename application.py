@@ -43,5 +43,11 @@ def administrative():
         l_administrative = json.load(administrative)
     return l_administrative
 
+@app.route('/schedule', methods=["POST"])
+def administrative():
+    with open('./data/m_schedule.json', 'r') as schedule:
+        m_schedule = json.load(schedule)
+    return m_schedule
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port="", debug=True)

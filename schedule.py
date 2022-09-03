@@ -33,6 +33,7 @@ li = ul.select('li')
 for i in li:
     m_930.write("[{}]\\n{} | {}".format(i.select_one('strong').get_text(), i.select_one('p > .sort').get_text(), i.select_one('p').get_text()[2:]))
     m_930.write("\\n")
+    m_930.write("\\n")
 
 m_930.write('", "buttons": [{"type": "url", "label": "전체 학사일정 보기", "data": {"url": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=930"}}]}]}]}')
 m_930.close()

@@ -93,25 +93,28 @@ m_weather.write("최저 기온: {}°C\\n".format(int(weather_temp_min)))
 m_weather.write("최고 기온: {}°C\\n".format(int(weather_temp_max)))
 m_weather.write("강수 확률: {}%".format(int(weather_pop * 100)))
 
-if(weather_main == ("Thunderstorm" or "Rain")):
+if(weather_main == "Thunderstorm" or weather_main == "Rain"):
     m_weather.write("\\n")
     m_weather.write("\\n")
     weather_rain = weather_json["list"][1]["rain"]["3h"]
     m_weather.write("강수량: {}mm".format(str(weather_rain)))
-
-if(weather_main == "Snow"):
+elif(weather_main == "Snow"):
     m_weather.write("\\n")
     m_weather.write("\\n")
     weather_snow = weather_json["list"][1]["snow"]["3h"]
     m_weather.write("강설량: {}mm".format(str(weather_snow)))
+elif(weather_main == "Squall" or weather_main == "Tornado"):
+    m_weather.write("\\n")
+    m_weather.write("\\n")
+    weather_wind = weather_json["list"][1]["wind"]["speed"]
+    m_weather.write("풍속: {}/sec".format(str(weather_wind)))
 
-if((weather_main == ("Clear" or "Clouds")) and int(weather_temp_feels_like) >= 35):
+if((weather_main == "Clear" or weather_main == "Clouds") and int(weather_temp_feels_like) >= 35):
     m_weather.write("\\n")
     m_weather.write("\\n")
     m_weather.write("체감 온도가 35도 이상이에요!\\n")
     m_weather.write("건강의 유의하여 주시고, 수분 보충을 꾸준히 해주세요!")
-
-if((weather_main == ("Clear" or "Clouds" or "Snow")) and int(weather_temp_feels_like) <= -18):
+elif((weather_main == "Clear" or weather_main == "Clouds" or weather_main == "Snow") and int(weather_temp_feels_like) <= -18):
     m_weather.write("\\n")
     m_weather.write("\\n")
     m_weather.write("체감 온도가 -18도 이하에요!\\n")

@@ -97,17 +97,17 @@ if(weather_main == "Thunderstorm" or weather_main == "Rain"):
     m_weather.write("\\n")
     m_weather.write("\\n")
     weather_rain = weather_json["list"][1]["rain"]["3h"]
-    m_weather.write("강수량: {}mm".format(str(weather_rain)))
+    m_weather.write("강수량: {}mm".format(round(weather_rain)))
 elif(weather_main == "Snow"):
     m_weather.write("\\n")
     m_weather.write("\\n")
     weather_snow = weather_json["list"][1]["snow"]["3h"]
-    m_weather.write("강설량: {}mm".format(str(weather_snow)))
+    m_weather.write("강설량: {}mm".format(round(weather_snow)))
 elif(weather_main == "Squall" or weather_main == "Tornado"):
     m_weather.write("\\n")
     m_weather.write("\\n")
     weather_wind = weather_json["list"][1]["wind"]["speed"]
-    m_weather.write("풍속: {}/sec".format(str(weather_wind)))
+    m_weather.write("풍속: {}m/sec".format(round(weather_wind)))
 
 if(int(weather_temp_feels_like) >= 35):
     m_weather.write("\\n")

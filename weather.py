@@ -109,12 +109,12 @@ elif(weather_main == "Squall" or weather_main == "Tornado"):
     weather_wind = weather_json["list"][1]["wind"]["speed"]
     m_weather.write("풍속: {}/sec".format(str(weather_wind)))
 
-if((weather_main == "Clear" or weather_main == "Clouds") and int(weather_temp_feels_like) >= 35):
+if(int(weather_temp_feels_like) >= 35):
     m_weather.write("\\n")
     m_weather.write("\\n")
     m_weather.write("체감 온도가 35도 이상이에요!\\n")
     m_weather.write("건강의 유의하여 주시고, 수분 보충을 꾸준히 해주세요!")
-elif((weather_main == "Clear" or weather_main == "Clouds" or weather_main == "Snow") and int(weather_temp_feels_like) <= -18):
+elif(int(weather_temp_feels_like) <= -18):
     m_weather.write("\\n")
     m_weather.write("\\n")
     m_weather.write("체감 온도가 -18도 이하에요!\\n")

@@ -31,9 +31,12 @@ ul = soup.select_one('#month{} > ul'.format(str(today.month)))
 li = ul.select('li')
 
 for i in li:
-    m_930.write("[{}]\\n{} | {}".format(i.select_one('strong').get_text(), i.select_one('p > .sort').get_text(), i.select_one('p').get_text()[2:]))
-    m_930.write("\\n")
-    m_930.write("\\n")
+    if i is li[-1]:
+        m_930.write("[{}]\\n{} | {}".format(i.select_one('strong').get_text(), i.select_one('p > .sort').get_text(), i.select_one('p').get_text()[2:]))
+    else:
+        m_930.write("[{}]\\n{} | {}".format(i.select_one('strong').get_text(), i.select_one('p > .sort').get_text(), i.select_one('p').get_text()[2:]))
+        m_930.write("\\n")
+        m_930.write("\\n")
 
 m_930.write('"}}],"quickReplies":[{"action": "block", "messageText": "전체 학사일정 보기", "label": "전체 학사일정 보기", "blockId": "6315901ce40f1940e6d747ba"}]}}')
 m_930.close()

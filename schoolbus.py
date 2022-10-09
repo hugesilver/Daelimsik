@@ -66,11 +66,6 @@ m_460_school_to_anyang.write("학교에서 안양역으로 이동하는 셔틀�
 m_460_school_to_anyang.write("\\n")
 
 for school_to_anyang in anyang_tr:
-    first_block = school_to_anyang.select_one('td:nth-child(1)').get_text()
-    second_block = school_to_anyang.select_one('td:nth-child(2)').get_text()
-    third_block = school_to_anyang.select_one('td:nth-child(3)').get_text()
-    fourth_block = school_to_anyang.select_one('td:nth-child(4)').get_text()
-    
     if ((school_to_anyang.select_one('td:nth-child(1)').get_text()) == "휴게시간"):
         pass
     elif (school_to_anyang.select_one('td:nth-child(1)').get_text() == " ") or (school_to_anyang.select_one('td:nth-child(1)').get_text() == "") or ((school_to_anyang.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):

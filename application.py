@@ -49,5 +49,29 @@ def schedule():
         m_schedule = json.load(schedule)
     return m_schedule
 
+@app.route('/anyang_to_school', methods=["POST"])
+def anyang_to_school():
+    with open('./data/m_anyang_to_school.json', 'r') as anyang_to_school:
+        m_anyang_to_school = json.load(anyang_to_school)
+    return m_anyang_to_school
+
+@app.route('/school_to_anyang', methods=["POST"])
+def school_to_anyang():
+    with open('./data/m_school_to_anyang.json', 'r') as school_to_anyang:
+        m_school_to_anyang = json.load(school_to_anyang)
+    return m_school_to_anyang
+
+@app.route('/beomgye_to_school', methods=["POST"])
+def beomgye_to_school():
+    with open('./data/m_beomgye_to_school.json', 'r') as beomgye_to_school:
+        m_beomgye_to_school = json.load(beomgye_to_school)
+    return m_beomgye_to_school
+
+@app.route('/school_to_beomgye', methods=["POST"])
+def school_to_beomgye():
+    with open('./data/m_school_to_beomgye.json', 'r') as school_to_beomgye:
+        m_school_to_beomgye = json.load(school_to_beomgye)
+    return m_school_to_beomgye
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port="", debug=True)

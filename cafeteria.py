@@ -53,9 +53,14 @@ else:
                     pass
                 else:
                     m_1470.write("[{}]\\n".format(student_data.select_one('th').get_text()))
-                    m_1470.write((((student_data.select_one(menu_today).get_text()).replace('\n', '\\n')).replace('"', '')).replace(' ',''))
-                    m_1470.write("\\n")
-                    m_1470.write("\\n")
+                    if(student_data.select_one(menu_today).get_text()[-1] == "\n"):
+                        m_1470.write((((student_data.select_one(menu_today).get_text()).replace('\n', '\\n')).replace(
+                            '"', '')).replace(' ', ''))
+                        m_1470.write("\\n")
+                    else:
+                        m_1470.write((((student_data.select_one(menu_today).get_text()).replace('\n', '\\n')).replace('"', '')).replace(' ',''))
+                        m_1470.write("\\n")
+                        m_1470.write("\\n")
             except AttributeError as e:
                 pass
 
@@ -105,10 +110,16 @@ else:
                     profstaff_none = profstaff_none + 1
                     pass
                 else:
-                    m_1480.write("[{}]\\n".format(profstaff_data.select_one('th').get_text()))
-                    m_1480.write((((profstaff_data.select_one(menu_today).get_text()).replace('\n', '\\n')).replace('"', '')).replace(' ', ''))
-                    m_1480.write("\\n")
-                    m_1480.write("\\n")
+                    if(profstaff_data.select_one(menu_today).get_text()[-1] == "\n"):
+                        m_1480.write("[{}]\\n".format(profstaff_data.select_one('th').get_text()))
+                        m_1480.write((((profstaff_data.select_one(menu_today).get_text()).replace('\n', '\\n')).replace(
+                            '"', '')).replace(' ', ''))
+                        m_1480.write("\\n")
+                    else:
+                        m_1480.write("[{}]\\n".format(profstaff_data.select_one('th').get_text()))
+                        m_1480.write((((profstaff_data.select_one(menu_today).get_text()).replace('\n', '\\n')).replace('"', '')).replace(' ', ''))
+                        m_1480.write("\\n")
+                        m_1480.write("\\n")
             except AttributeError as e:
                 pass
 

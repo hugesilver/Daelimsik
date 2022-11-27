@@ -11,7 +11,7 @@ def main():
 
 @app.route('/student', methods=["POST"])
 def student():
-    with open('./out/student/m_student.json', 'r') as student:
+    with open('./out/student/m_student_today.json', 'r') as student:
         m_student = json.load(student)
     return m_student
 
@@ -49,7 +49,7 @@ def student_fri():
 
 @app.route('/profstaff', methods=["POST"])
 def profstaff():
-    with open('./out/profstaff/m_profstaff.json', 'r') as profstaff:
+    with open('./out/profstaff/m_profstaff_today.json', 'r') as profstaff:
         m_profstaff = json.load(profstaff)
     return m_profstaff
 

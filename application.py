@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "<h2>Hello It's Daelimsik</h2>"
+    return "<h2>Daelimsik 홈페이지</h2>"
 
 # 학생식당
 

@@ -1,5 +1,5 @@
 # 🟡 카카오톡 학식봇 대림식
-<img src="https://github.com/hugesilver/Daelimsik/blob/main/logo/Daelimsik_logo_Authority.jpg?raw=true" width="300px" height="300px"><br>
+<img src="https://github.com/hugesilver/Daelimsik/blob/main/img/Daelimsik_logo_Authority.jpg?raw=true" width="300px" height="300px"><br>
 
 ## 1️⃣ 소개
 2022년 여름방학에 개인적으로 진행한 첫 파이썬 프로젝트입니다.<br>

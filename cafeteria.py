@@ -52,7 +52,7 @@ else:
         globals()["m_1470_{}".format(file_weekday[i])].write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
         globals()["m_1470_{}".format(file_weekday[i])].write("[대림식 알림]\\n")
         globals()["m_1470_{}".format(file_weekday[i])].write("\\n")
-        globals()["m_1470_{}".format(file_weekday[i])].write("{} 주간 중 {} 학생식당 메뉴입니다.\\n".format(soup.select_one('#current_date').get_text(), days[i]))
+        globals()["m_1470_{}".format(file_weekday[i])].write("{} 주간 중\\n{} 학생식당 메뉴입니다.\\n".format(soup.select_one('#current_date').get_text(), days[i]))
         globals()["m_1470_{}".format(file_weekday[i])].write("\\n")
 
         if (no_data != []):
@@ -159,7 +159,7 @@ else:
         globals()["m_1480_{}".format(file_weekday[i])].write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
         globals()["m_1480_{}".format(file_weekday[i])].write("[대림식 알림]\\n")
         globals()["m_1480_{}".format(file_weekday[i])].write("\\n")
-        globals()["m_1480_{}".format(file_weekday[i])].write("{} 주간 중 {} 교직원식당 메뉴입니다.\\n".format(soup.select_one('#current_date').get_text(), days[i]))
+        globals()["m_1480_{}".format(file_weekday[i])].write("{} 주간 중\\n{} 교직원식당 메뉴입니다.\\n".format(soup.select_one('#current_date').get_text(), days[i]))
         globals()["m_1480_{}".format(file_weekday[i])].write("\\n")
 
         if (no_data != []):

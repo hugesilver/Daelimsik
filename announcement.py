@@ -19,7 +19,7 @@ driver.quit() # 웹드라이버 종료
 
 soup = BeautifulSoup(bachelor, 'html.parser')
 
-m_900 = open("./data/l_bachelor.json", 'w')
+m_900 = open("./out/announcement/l_bachelor.json", 'w')
 m_900.write('{"version": "2.0","template": {"outputs": [{"listCard": {"header": {"title": "대림대학교 학사 공지사항"},"items": [')
 
 for i in range(5):
@@ -54,7 +54,7 @@ driver.quit() # 웹드라이버 종료
 
 soup = BeautifulSoup(scholarship, 'html.parser')
 
-m_990 = open("./data/l_scholarship.json", 'w')
+m_990 = open("./out/announcement/l_scholarship.json", 'w')
 
 m_990.write('{"version": "2.0","template": {"outputs": [{"listCard": {"header": {"title": "대림대학교 장학 공지사항"},"items": [')
 
@@ -90,7 +90,7 @@ driver.quit() # 웹드라이버 종료
 
 soup = BeautifulSoup(administrative, 'html.parser')
 
-m_30 = open("./data/l_administrative.json", 'w')
+m_30 = open("./out/announcement/l_administrative.json", 'w')
 
 m_30.write('{"version": "2.0","template": {"outputs": [{"listCard": {"header": {"title": "대림대학교 행정 공지사항"},"items": [')
 

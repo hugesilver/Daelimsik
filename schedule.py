@@ -11,7 +11,7 @@ option.add_argument('--disable-dev-shm-usage')
 
 today = date.today()
 
-m_930 = open("./data/m_schedule.json", 'w')
+m_930 = open("./out/schedule/m_schedule.json", 'w')
 
 m_930.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_930.write("[대림식 알림]\\n")

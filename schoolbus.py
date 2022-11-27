@@ -23,7 +23,7 @@ anyang_tr = anyang.select('tr')
 
 # 안양역에서 학교
 
-m_460_anyang_to_school = open("./data/m_anyang_to_school.json", 'w')
+m_460_anyang_to_school = open("./out/schoolbus/m_anyang_to_school.json", 'w')
 m_460_anyang_to_school.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_460_anyang_to_school.write("[대림식 알림]\\n")
 m_460_anyang_to_school.write("\\n")
@@ -62,7 +62,7 @@ m_460_anyang_to_school.close()
 
 # 학교에서 안양역
 
-m_460_school_to_anyang = open("./data/m_school_to_anyang.json", 'w')
+m_460_school_to_anyang = open("./out/schoolbus/m_school_to_anyang.json", 'w')
 m_460_school_to_anyang.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_460_school_to_anyang.write("[대림식 알림]\\n")
 m_460_school_to_anyang.write("\\n")
@@ -104,7 +104,7 @@ beomgye_tr = beomgye.select('tr')
 
 # 범계역에서 학교
 
-m_460_beomgye_to_school = open("./data/m_beomgye_to_school.json", 'w')
+m_460_beomgye_to_school = open("./out/schoolbus/m_beomgye_to_school.json", 'w')
 m_460_beomgye_to_school.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_460_beomgye_to_school.write("[대림식 알림]\\n")
 m_460_beomgye_to_school.write("\\n")
@@ -143,7 +143,7 @@ m_460_beomgye_to_school.close()
 
 # 학교에서 범계역
 
-m_460_school_to_beomgye = open("./data/m_school_to_beomgye.json", 'w')
+m_460_school_to_beomgye = open("./out/schoolbus/m_school_to_beomgye.json", 'w')
 m_460_school_to_beomgye.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_460_school_to_beomgye.write("[대림식 알림]\\n")
 m_460_school_to_beomgye.write("\\n")

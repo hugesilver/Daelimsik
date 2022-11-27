@@ -6,7 +6,7 @@ today = date.today()
 days = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
 weekday_number = today.weekday() # 월요일 0 일요일 6
 
-m_weather = open("./data/m_weather.json", 'w')
+m_weather = open("./out/weather/m_weather.json", 'w')
 
 m_weather.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
 m_weather.write("[대림식 알림]\\n")

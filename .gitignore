@@ -1,5 +1,5 @@
 .idea/
 .DS_Store
 chromedriver
-logo/
-data/
+img/
+out/

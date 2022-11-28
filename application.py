@@ -67,7 +67,7 @@ def profstaff_tue():
 
 @app.route('/profstaff/wed', methods=["POST"])
 def profstaff_wed():
-    with open('./out/profstaff/m_profstaff_mon.json', 'r') as profstaff_wed:
+    with open('./out/profstaff/m_profstaff_wed.json', 'r') as profstaff_wed:
         m_profstaff_wed = json.load(profstaff_wed)
     return m_profstaff_wed
 

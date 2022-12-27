@@ -37,7 +37,7 @@ else:
     m_1470_thu = open("./out/student/m_student_thu.json", 'w')
     m_1470_fri = open("./out/student/m_student_fri.json", 'w')
 
-    driver = webdriver.Chrome("./webdriver/chromedriver",chrome_options=option)
+    driver = webdriver.Chrome("./webdriver/chromedriver", chrome_options=option)
     driver.get('https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=1470')
     sleep(3)
     student = driver.page_source
@@ -85,7 +85,7 @@ else:
                 globals()["m_1470_{}".format(file_weekday[i])].write("\\n")
 
         globals()["m_1470_{}".format(file_weekday[i])].write("※ 식단 데이터는 매일 오전 7시 30분에 업데이트됩니다.\\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
-        globals()["m_1470_{}".format(file_weekday[i])].write('"}}],"quickReplies":[{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+        globals()["m_1470_{}".format(file_weekday[i])].write('"}}]}}')
         globals()["m_1470_{}".format(file_weekday[i])].close()
 
     ### 학생식당 오늘 메뉴보기 ###
@@ -120,8 +120,9 @@ else:
             m_1470.write("\\n")
 
 m_1470.write("※ 식단 데이터는 매일 오전 7시 30분에 업데이트됩니다.\\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
-m_1470.write('"}}],"quickReplies":[{"action": "block", "messageText": "📆 주간 메뉴보기", "label": "📆 주간 메뉴보기", "blockId": "63838ed48f7dc436c34546a9"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_1470.write('"}}],"quickReplies":[{"action": "block", "messageText": "📆 주간 메뉴보기", "label": "📆 주간 메뉴보기", "blockId": "63838ed48f7dc436c34546a9"}]}}')
 m_1470.close()
+
 
 ######################################### 교직원 식당 #########################################
 
@@ -144,7 +145,7 @@ else:
     m_1480_thu = open("./out/profstaff/m_profstaff_thu.json", 'w')
     m_1480_fri = open("./out/profstaff/m_profstaff_fri.json", 'w')
 
-    driver = webdriver.Chrome("./webdriver/chromedriver",chrome_options=option)
+    driver = webdriver.Chrome("./webdriver/chromedriver", chrome_options=option)
     driver.get('https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=1480')
     sleep(3)
     profstaff = driver.page_source
@@ -187,17 +188,12 @@ else:
                     profstaff_none = profstaff_none + 1
                     pass
 
-            if (weekday_number == 0):
-                if (len(profstaff_table_tr) - profstaff_none) == 1:
-                    m_1480.write("메뉴가 없습니다.\\n")
-                    m_1480.write("\\n")
-            else:
-                if (len(profstaff_table_tr) - profstaff_none) == 0:
-                    m_1480.write("메뉴가 없습니다.\\n")
-                    m_1480.write("\\n")
+            if (len(profstaff_table_tr) - profstaff_none) == 0:
+                globals()["m_1480_{}".format(file_weekday[i])].write("메뉴가 없습니다.\\n")
+                globals()["m_1480_{}".format(file_weekday[i])].write("\\n")
 
         globals()["m_1480_{}".format(file_weekday[i])].write("※ 식단 데이터는 매일 오전 7시 30분에 업데이트됩니다.\\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
-        globals()["m_1480_{}".format(file_weekday[i])].write('"}}],"quickReplies":[{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+        globals()["m_1480_{}".format(file_weekday[i])].write('"}}]}}')
         globals()["m_1480_{}".format(file_weekday[i])].close()
 
     ### 교직원식당 오늘 메뉴보기 ###
@@ -228,15 +224,10 @@ else:
                 profstaff_none = profstaff_none + 1
                 pass
 
-        if(weekday_number == 0):
-            if(len(profstaff_table_tr) - profstaff_none) == 1:
-                m_1480.write("메뉴가 없습니다.\\n")
-                m_1480.write("\\n")
-        else:
-            if(len(profstaff_table_tr) - profstaff_none) == 0:
-                m_1480.write("메뉴가 없습니다.\\n")
-                m_1480.write("\\n")
+        if(len(profstaff_table_tr) - profstaff_none) == 0:
+            m_1480.write("메뉴가 없습니다.\\n")
+            m_1480.write("\\n")
 
 m_1480.write("※ 식단 데이터는 매일 오전 7시 30분에 업데이트됩니다.\\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
-m_1480.write('"}}],"quickReplies":[{"action": "block", "messageText": "📆 주간 메뉴보기", "label": "📆 주간 메뉴보기", "blockId": "638391938f7dc436c34546c3"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_1480.write('"}}],"quickReplies":[{"action": "block", "messageText": "📆 주간 메뉴보기", "label": "📆 주간 메뉴보기", "blockId": "638391938f7dc436c34546c3"}]}}')
 m_1480.close()

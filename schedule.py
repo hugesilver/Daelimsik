@@ -38,5 +38,5 @@ for i in li:
         m_930.write("\\n")
         m_930.write("\\n")
 
-m_930.write('"}}],"quickReplies":[{"action": "block", "messageText": "📃 전체 학사일정 보기", "label": "📃 전체 학사일정 보기", "blockId": "6315901ce40f1940e6d747ba"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_930.write('"}}],"quickReplies":[{"action": "block", "messageText": "📃 전체 학사일정 보기", "label": "📃 전체 학사일정 보기", "blockId": "6315901ce40f1940e6d747ba"}]}}')
 m_930.close()

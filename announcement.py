@@ -40,7 +40,7 @@ for i in range(5):
         m_900.write('}')
 
 m_900.write('],')
-m_900.write('"buttons": [{"label": "학사 공지사항 전체보기", "action": "webLink", "webLinkUrl": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=900#page1"}]}}],"quickReplies":[{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_900.write('"buttons": [{"label": "학사 공지사항 전체보기", "action": "webLink", "webLinkUrl": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=900#page1"}]}}]}}')
 m_900.close()
 
 
@@ -76,7 +76,7 @@ for i in range(5):
         m_990.write('}')
 
 m_990.write('],')
-m_990.write('"buttons": [{"label": "장학 공지사항 전체보기", "action": "webLink", "webLinkUrl": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=990#page1"}]}}],"quickReplies":[{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_990.write('"buttons": [{"label": "장학 공지사항 전체보기", "action": "webLink", "webLinkUrl": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=990#page1"}]}}]}}')
 m_990.close()
 
 
@@ -112,6 +112,6 @@ for i in range(5):
         m_30.write('}')
 
 m_30.write('],')
-m_30.write('"buttons": [{"label": "행정 공지사항 전체보기", "action": "webLink", "webLinkUrl": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=30#page1"}]}}],"quickReplies":[{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_30.write('"buttons": [{"label": "행정 공지사항 전체보기", "action": "webLink", "webLinkUrl": "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=30#page1"}]}}]}}')
 m_30.close()
 

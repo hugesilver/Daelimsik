@@ -57,7 +57,7 @@ for anyang_to_school in anyang_tr:
                 m_460_anyang_to_school.write("(배차간격: {})\\n".format(anyang_to_school.select_one('td:nth-child(4)').get_text()))
 
 m_460_anyang_to_school.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_anyang_to_school.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_460_anyang_to_school.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
 m_460_anyang_to_school.close()
 
 # 학교에서 안양역
@@ -94,7 +94,7 @@ for school_to_anyang in anyang_tr:
                 m_460_school_to_anyang.write("(배차간격: {})\\n".format(school_to_anyang.select_one('td:nth-child(4)').get_text()))
 
 m_460_school_to_anyang.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_school_to_anyang.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_460_school_to_anyang.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
 m_460_school_to_anyang.close()
 
 # 범계역
@@ -138,7 +138,7 @@ for beomgye_to_school in beomgye_tr:
                 m_460_beomgye_to_school.write("(배차간격: {})\\n".format(beomgye_to_school.select_one('td:nth-child(4)').get_text()))
 
 m_460_beomgye_to_school.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_beomgye_to_school.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_460_beomgye_to_school.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
 m_460_beomgye_to_school.close()
 
 # 학교에서 범계역
@@ -175,5 +175,5 @@ for school_to_beomgye in beomgye_tr:
                 m_460_school_to_beomgye.write("(배차간격: {})\\n".format(school_to_beomgye.select_one('td:nth-child(4)').get_text()))
 
 m_460_school_to_beomgye.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_school_to_beomgye.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"},{"action": "block", "messageText": "☕️ 커피 후원하기", "label": "☕️ 커피 후원하기", "blockId": "633e658052a78f5479d6acea"}]}}')
+m_460_school_to_beomgye.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
 m_460_school_to_beomgye.close()

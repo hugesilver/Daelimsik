@@ -80,7 +80,7 @@ else:
                     student_none = student_none + 1
                     pass
 
-            if (student_none >= len(student_table_tr) - 2):
+            if (student_none == len(student_table_tr)):
                 globals()["m_1470_{}".format(file_weekday[i])].write("메뉴가 없습니다.\\n")
                 globals()["m_1470_{}".format(file_weekday[i])].write("\\n")
 
@@ -115,7 +115,7 @@ else:
                 student_none = student_none + 1
                 pass
 
-        if (student_none >= len(student_table_tr) - 2):
+        if (student_none == len(student_table_tr)):
             m_1470.write("메뉴가 없습니다.\\n")
             m_1470.write("\\n")
 
@@ -188,7 +188,7 @@ else:
                     profstaff_none = profstaff_none + 1
                     pass
 
-            if (len(profstaff_table_tr) - profstaff_none) == 0:
+            if (profstaff_none == len(profstaff_table_tr)):
                 globals()["m_1480_{}".format(file_weekday[i])].write("메뉴가 없습니다.\\n")
                 globals()["m_1480_{}".format(file_weekday[i])].write("\\n")
 
@@ -224,7 +224,7 @@ else:
                 profstaff_none = profstaff_none + 1
                 pass
 
-        if(len(profstaff_table_tr) - profstaff_none) == 0:
+        if (profstaff_none == len(profstaff_table_tr)):
             m_1480.write("메뉴가 없습니다.\\n")
             m_1480.write("\\n")
 

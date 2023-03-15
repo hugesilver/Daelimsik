@@ -70,10 +70,10 @@ m_460_school_to_anyang.write("학교에서 안양역으로 이동하는 셔틀�
 m_460_school_to_anyang.write("\\n")
 
 for school_to_anyang in anyang_tr:
-    if ((school_to_anyang.select_one('td:nth-child(1)').get_text()) == "휴게시간"):
+    if ((school_to_anyang.select_one('td:nth-child(1)').get_text()) == "휴게시간") or (school_to_anyang.select_one('td:nth-child(1)[colspan]')):
         pass
     elif (school_to_anyang.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]) or ((school_to_anyang.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):
-        if(school_to_anyang.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
+        if (school_to_anyang.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
             pass
         else:
             m_460_school_to_anyang.write("- ")
@@ -83,7 +83,7 @@ for school_to_anyang in anyang_tr:
             else:
                 m_460_school_to_anyang.write("(배차간격: {})\\n".format(school_to_anyang.select_one('td:nth-child(3)').get_text()))
     elif (school_to_anyang.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-        if(school_to_anyang.select_one('td:nth-child(3)').get_text() in ["", " ", "&nbsp;", " "]):
+        if (school_to_anyang.select_one('td:nth-child(3)').get_text() in ["", " ", "&nbsp;", " "]):
             pass
         else:
             m_460_school_to_anyang.write("- ")
@@ -151,10 +151,10 @@ m_460_school_to_beomgye.write("학교에서 범계역으로 이동하는 셔틀�
 m_460_school_to_beomgye.write("\\n")
 
 for school_to_beomgye in beomgye_tr:
-    if ((school_to_beomgye.select_one('td:nth-child(1)').get_text()) == "휴게시간"):
+    if ((school_to_beomgye.select_one('td:nth-child(1)').get_text()) == "휴게시간") or (school_to_beomgye.select_one('td:nth-child(1)[colspan]')):
         pass
     elif (school_to_beomgye.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]) or ((school_to_beomgye.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):
-        if(school_to_beomgye.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
+        if (school_to_beomgye.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
             pass
         else:
             m_460_school_to_beomgye.write("- ")

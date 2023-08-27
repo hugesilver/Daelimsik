@@ -1,4 +1,6 @@
-from bs4 import BeautifulSoup
+import json
+
+from bs4 import BeautifulSoup, Comment
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from time import sleep
@@ -8,172 +10,214 @@ option.add_argument('--headless')
 option.add_argument('--no-sandbox')
 option.add_argument('--disable-dev-shm-usage')
 
-driver = webdriver.Chrome("./webdriver/chromedriver",chrome_options=option)
+driver = webdriver.Chrome("./webdriver/chromedriver", chrome_options=option)
 driver.get('https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=460')
 sleep(3)
 bus = driver.page_source
-driver.quit() # 웹드라이버 종료
+driver.quit()  # 웹드라이버 종료
 
 soup = BeautifulSoup(bus, 'html.parser')
 
-# 안양역
 
-anyang = soup.select_one('.lineTop_tbArea > table > tbody')
-anyang_tr = anyang.select('tr')
+def output(msg, quickreplies):
+    return {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": ''.join(msg)
+                    }
+                }
+            ],
+            "quickReplies": quickreplies
+        }
+    }
 
-# 안양역에서 학교
 
-m_460_anyang_to_school = open("./out/schoolbus/m_anyang_to_school.json", 'w')
-m_460_anyang_to_school.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_460_anyang_to_school.write("[대림식 알림]\\n")
-m_460_anyang_to_school.write("\\n")
-m_460_anyang_to_school.write("안양역에서 학교로 이동하는 셔틀버스 안내입니다.\\n")
-m_460_anyang_to_school.write("\\n")
+def quickreply(label, blockid):
+    return {
+        "action": "block",
+        "messageText": label,
+        "label": label,
+        "blockId": blockid
+    }
 
-for anyang_to_school in anyang_tr:
-    if ((anyang_to_school.select_one('td:nth-child(1)').get_text()) in ["휴게시간", "", " ", "&nbsp;", " "]):
-        pass
-    elif (((anyang_to_school.select_one('td:nth-child(1)').get_text())[1].isdigit() == False) and ((anyang_to_school.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]))):
-        pass
-    elif (anyang_to_school.select_one('td:nth-child(1)').get_text())[1].isdigit() == True:
-        if (anyang_to_school.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]):
+
+def station_to_school(loc, message):
+    for tr in loc:
+        if ((tr.select_one('td:nth-child(1)').get_text()) in ["휴게시간", "", " ", "&nbsp;", " "]):
             pass
-        else:
-            m_460_anyang_to_school.write("- ")
-            m_460_anyang_to_school.write(anyang_to_school.select_one('td:nth-child(1)').get_text() + " ")
-            if (anyang_to_school.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_anyang_to_school.write("\\n")
-            else:
-                m_460_anyang_to_school.write("(배차간격: {})\\n".format(anyang_to_school.select_one('td:nth-child(3)').get_text()))
-    elif (anyang_to_school.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-        if (anyang_to_school.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
+        elif (((tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == False) and (
+                (tr.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]))):
             pass
-        else:
-            m_460_anyang_to_school.write("- ")
-            m_460_anyang_to_school.write(anyang_to_school.select_one('td:nth-child(2)').get_text() + " ")
-            if (anyang_to_school.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_anyang_to_school.write("\\n")
+        elif (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == True:
+            if (tr.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]):
+                pass
             else:
-                m_460_anyang_to_school.write("(배차간격: {})\\n".format(anyang_to_school.select_one('td:nth-child(4)').get_text()))
+                message.append("- ")
+                message.append(tr.select_one('td:nth-child(1)').get_text() + " ")
+                if (tr.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
+                    message.append("\n")
+                else:
+                    message.append(
+                        "(배차간격: {})\n".format(tr.select_one('td:nth-child(3)').get_text()))
+        elif (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
+            if (tr.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
+                pass
+            else:
+                message.append("- ")
+                message.append(tr.select_one('td:nth-child(2)').get_text() + " ")
+                if (tr.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
+                    message.append("\n")
+                else:
+                    message.append(
+                        "(배차간격: {})\n".format(tr.select_one('td:nth-child(4)').get_text()))
 
-m_460_anyang_to_school.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_anyang_to_school.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
-m_460_anyang_to_school.close()
 
-# 학교에서 안양역
-
-m_460_school_to_anyang = open("./out/schoolbus/m_school_to_anyang.json", 'w')
-m_460_school_to_anyang.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_460_school_to_anyang.write("[대림식 알림]\\n")
-m_460_school_to_anyang.write("\\n")
-m_460_school_to_anyang.write("학교에서 안양역으로 이동하는 셔틀버스 안내입니다.\\n")
-m_460_school_to_anyang.write("\\n")
-
-for school_to_anyang in anyang_tr:
-    if ((school_to_anyang.select_one('td:nth-child(1)').get_text()) == "휴게시간") or (school_to_anyang.select_one('td:nth-child(1)[colspan]')):
-        pass
-    elif (school_to_anyang.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]) or ((school_to_anyang.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):
-        if (school_to_anyang.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
+def school_to_station(loc, message):
+    for tr in loc:
+        if ((tr.select_one('td:nth-child(1)').get_text()) == "휴게시간") or (
+                tr.select_one('td:nth-child(1)[colspan]')):
             pass
-        else:
-            m_460_school_to_anyang.write("- ")
-            m_460_school_to_anyang.write(school_to_anyang.select_one('td:nth-child(2)').get_text() + " ")
-            if (school_to_anyang.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_school_to_anyang.write("\\n")
+        elif (tr.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]) or (
+                (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):
+            if (tr.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
+                pass
             else:
-                m_460_school_to_anyang.write("(배차간격: {})\\n".format(school_to_anyang.select_one('td:nth-child(3)').get_text()))
-    elif (school_to_anyang.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-        if (school_to_anyang.select_one('td:nth-child(3)').get_text() in ["", " ", "&nbsp;", " "]):
-            pass
-        else:
-            m_460_school_to_anyang.write("- ")
-            m_460_school_to_anyang.write(school_to_anyang.select_one('td:nth-child(3)').get_text() + " ")
-            if (school_to_anyang.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_school_to_anyang.write("\\n")
+                message.append("- ")
+                message.append(tr.select_one('td:nth-child(2)').get_text() + " ")
+                if (tr.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
+                    message.append("\n")
+                else:
+                    message.append(
+                        "(배차간격: {})\n".format(tr.select_one('td:nth-child(3)').get_text()))
+        elif (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
+            if (tr.select_one('td:nth-child(3)').get_text() in ["", " ", "&nbsp;", " "]):
+                pass
             else:
-                m_460_school_to_anyang.write("(배차간격: {})\\n".format(school_to_anyang.select_one('td:nth-child(4)').get_text()))
+                message.append("- ")
+                message.append(tr.select_one('td:nth-child(3)').get_text() + " ")
+                if (tr.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
+                    message.append("\n")
+                else:
+                    message.append(
+                        "(배차간격: {})\n".format(tr.select_one('td:nth-child(4)').get_text()))
 
-m_460_school_to_anyang.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_school_to_anyang.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
-m_460_school_to_anyang.close()
 
-# 범계역
+######################################### 안양역 #########################################
 
-beomgye = soup.select_one('.mT30 > table > tbody')
-beomgye_tr = beomgye.select('tr')
+anyang_tr = soup.select_one('.lineTop_tbArea > table > tbody').select('tr')
 
-# 범계역에서 학교
+### 안양역에서 학교 ###
 
-m_460_beomgye_to_school = open("./out/schoolbus/m_beomgye_to_school.json", 'w')
-m_460_beomgye_to_school.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_460_beomgye_to_school.write("[대림식 알림]\\n")
-m_460_beomgye_to_school.write("\\n")
-m_460_beomgye_to_school.write("범계역에서 학교로 이동하는 셔틀버스 안내입니다.\\n")
-m_460_beomgye_to_school.write("\\n")
+anyang_to_school = []
 
-for beomgye_to_school in beomgye_tr:
-    if ((beomgye_to_school.select_one('td:nth-child(1)').get_text()) in ["휴게시간", "", " ", "&nbsp;", " "]):
-        pass
-    elif (((beomgye_to_school.select_one('td:nth-child(1)').get_text())[1].isdigit() == False) and (((beomgye_to_school.select_one('td:nth-child(2)').get_text()) in ["", " ", "&nbsp;", " "]))):
-        pass
-    elif (beomgye_to_school.select_one('td:nth-child(1)').get_text())[1].isdigit() == True:
-        if(beomgye_to_school.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]):
-            pass
-        else:
-            m_460_beomgye_to_school.write("- ")
-            m_460_beomgye_to_school.write(beomgye_to_school.select_one('td:nth-child(1)').get_text() + " ")
-            if (beomgye_to_school.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_beomgye_to_school.write("\\n")
-            else:
-                m_460_beomgye_to_school.write("(배차간격: {})\\n".format(beomgye_to_school.select_one('td:nth-child(3)').get_text()))
-    elif (beomgye_to_school.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-        if (beomgye_to_school.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
-            pass
-        else:
-            m_460_beomgye_to_school.write("- ")
-            m_460_beomgye_to_school.write(beomgye_to_school.select_one('td:nth-child(2)').get_text() + " ")
-            if (beomgye_to_school.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_beomgye_to_school.write("\\n")
-            else:
-                m_460_beomgye_to_school.write("(배차간격: {})\\n".format(beomgye_to_school.select_one('td:nth-child(4)').get_text()))
+anyang_to_school.append("[대림식 알림]\n")
+anyang_to_school.append("\n")
+anyang_to_school.append("안양역에서 학교로 이동하는 셔틀버스 안내입니다.\n")
+anyang_to_school.append("\n")
 
-m_460_beomgye_to_school.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_beomgye_to_school.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
-m_460_beomgye_to_school.close()
+station_to_school(anyang_tr, anyang_to_school)
 
-# 학교에서 범계역
+anyang_to_school.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
 
-m_460_school_to_beomgye = open("./out/schoolbus/m_school_to_beomgye.json", 'w')
-m_460_school_to_beomgye.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_460_school_to_beomgye.write("[대림식 알림]\\n")
-m_460_school_to_beomgye.write("\\n")
-m_460_school_to_beomgye.write("학교에서 범계역으로 이동하는 셔틀버스 안내입니다.\\n")
-m_460_school_to_beomgye.write("\\n")
+with open("./out/schoolbus/m_anyang_to_school.json", 'w') as outfile:
+    json.dump(output(anyang_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 안양역 정류장", "64eb29d7e4f55f6afe21492f")]), outfile,
+              ensure_ascii=False)
 
-for school_to_beomgye in beomgye_tr:
-    if ((school_to_beomgye.select_one('td:nth-child(1)').get_text()) == "휴게시간") or (school_to_beomgye.select_one('td:nth-child(1)[colspan]')):
-        pass
-    elif (school_to_beomgye.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]) or ((school_to_beomgye.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):
-        if (school_to_beomgye.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
-            pass
-        else:
-            m_460_school_to_beomgye.write("- ")
-            m_460_school_to_beomgye.write(school_to_beomgye.select_one('td:nth-child(2)').get_text() + " ")
-            if (school_to_beomgye.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_school_to_beomgye.write("\\n")
-            else:
-                m_460_school_to_beomgye.write("(배차간격: {})\\n".format(school_to_beomgye.select_one('td:nth-child(3)').get_text()))
-    elif (school_to_beomgye.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-        if (school_to_beomgye.select_one('td:nth-child(3)').get_text() in ["", " ", "&nbsp;", " "]):
-            pass
-        else:
-            m_460_school_to_beomgye.write("- ")
-            m_460_school_to_beomgye.write(school_to_beomgye.select_one('td:nth-child(3)').get_text() + " ")
-            if (school_to_beomgye.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                m_460_school_to_beomgye.write("\\n")
-            else:
-                m_460_school_to_beomgye.write("(배차간격: {})\\n".format(school_to_beomgye.select_one('td:nth-child(4)').get_text()))
+### 학교에서 안양역 ###
 
-m_460_school_to_beomgye.write("\\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
-m_460_school_to_beomgye.write('"}}],"quickReplies":[{"action": "block", "messageText": "🚌 전체 셔틀버스 배차시간", "label": "🚌 전체 셔틀버스 배차시간", "blockId": "633e69ddca1fd2777db9a2a8"}]}}')
-m_460_school_to_beomgye.close()
+school_to_anyang = []
+
+school_to_anyang.append("[대림식 알림]\n")
+school_to_anyang.append("\n")
+school_to_anyang.append("학교에서 안양역으로 이동하는 셔틀버스 안내입니다.\n")
+school_to_anyang.append("\n")
+
+school_to_station(anyang_tr, school_to_anyang)
+
+school_to_anyang.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
+
+with open("./out/schoolbus/m_school_to_anyang.json", 'w') as outfile:
+    json.dump(output(school_to_anyang, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 안양역 정류장", "64eb29d7e4f55f6afe21492f")]), outfile,
+              ensure_ascii=False)
+
+######################################### 범계역 #########################################
+
+beomgye_tr = soup.select_one('.mT30 > table > tbody').select('tr')
+
+### 범계역에서 학교 ###
+
+beomgye_to_school = []
+
+beomgye_to_school.append("[대림식 알림]\n")
+beomgye_to_school.append("\n")
+beomgye_to_school.append("범계역에서 학교로 이동하는 셔틀버스 안내입니다.\n")
+beomgye_to_school.append("\n")
+
+station_to_school(beomgye_tr, beomgye_to_school)
+
+beomgye_to_school.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
+
+with open("./out/schoolbus/m_beomgye_to_school.json", 'w') as outfile:
+    json.dump(output(beomgye_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 범계역 정류장", "64eb29e9e4f55f6afe214935")]), outfile,
+              ensure_ascii=False)
+
+### 학교에서 범계역 ###
+
+school_to_beomgye = []
+
+school_to_beomgye.append("[대림식 알림]\n")
+school_to_beomgye.append("\n")
+school_to_beomgye.append("학교에서 범계역으로 이동하는 셔틀버스 안내입니다.\n")
+school_to_beomgye.append("\n")
+
+school_to_station(beomgye_tr, school_to_beomgye)
+
+school_to_beomgye.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
+
+with open("./out/schoolbus/m_school_to_beomgye.json", 'w') as outfile:
+    json.dump(output(school_to_beomgye, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 범계역 정류장", "64eb29e9e4f55f6afe214935")]), outfile,
+              ensure_ascii=False)
+
+
+######################################### 정류장 #########################################
+
+def helpoutput(info, alttext):
+    if info:
+        text = ""
+        if info.find('ul').find("li"):
+            location = info.find('ul').find("li")
+            if location.find("b"):
+                location.find("b").decompose()
+            if location.find(string=lambda text: isinstance(text, Comment)):
+                location.find(string=lambda text: isinstance(text, Comment)).extract()
+            text = location.get_text().replace("\n", "").rstrip()
+        return {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleImage": {
+                            "imageUrl": f"https://www.daelim.ac.kr{info.find('img').get('src')}",
+                            "altText": alttext
+                        }
+                    },
+                    {
+                        "simpleText": {
+                            "text": text
+                        }
+                    }
+                ],
+            }
+        }
+
+
+anyang_info = soup.select_one('.comewayDiv')
+beomgye_info = soup.select_one('.mT70')
+
+with open("./out/schoolbus/m_help_anyang.json", 'w') as outfile:
+    json.dump(helpoutput(anyang_info, "안양역 정류장"), outfile, ensure_ascii=False)
+with open("./out/schoolbus/m_help_beomgye.json", 'w') as outfile:
+    json.dump(helpoutput(beomgye_info, "범계역 정류장"), outfile, ensure_ascii=False)

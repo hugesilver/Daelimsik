@@ -1,42 +1,128 @@
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from time import sleep
-from datetime import date
+import json
+from datetime import date, datetime
 
-option = Options()
-option.add_argument('--headless')
-option.add_argument('--no-sandbox')
-option.add_argument('--disable-dev-shm-usage')
+import requests
 
 today = date.today()
 
-m_930 = open("./out/schedule/m_schedule.json", 'w')
+scheduleData_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
+scheduleData = requests.get(scheduleData_url).json()["data"]
 
-m_930.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_930.write("[대림식 알림]\\n")
-m_930.write("\\n")
-m_930.write("{}년 {}월 학사일정입니다.\\n".format(today.year, today.month))
-m_930.write("\\n")
+scheduleListData_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleListData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
+scheduleListData = requests.get(scheduleListData_url).json()["data"]
 
-driver = webdriver.Chrome("./webdriver/chromedriver",chrome_options=option)
-driver.get('https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=930')
-sleep(3)
-schedule = driver.page_source
-driver.quit() # 웹드라이버 종료
+uniqueSubject = []
+uniquifiedScheduleListData = []
 
-soup = BeautifulSoup(schedule, 'html.parser')
+# SUBJECT 단일화
 
-ul = soup.select_one('#month{} > ul'.format(str(today.month)))
-li = ul.select('li')
+for sd in scheduleData:
+    if sd.get("SUBJECT") is not None:
+        uniqueSubject.append(sd["SUBJECT"])
 
-for i in li:
-    if i is li[-1]:
-        m_930.write("[{}]\\n{} | {}".format(i.select_one('strong').get_text(), i.select_one('p > .sort').get_text(), i.select_one('p').get_text()[2:]))
+for sld in scheduleListData:
+    if sld.get("SUBJECT") is not None:
+        if sld["SUBJECT"] not in uniqueSubject:
+            uniquifiedScheduleListData.append(sld)
+
+
+def output(msg):
+    return {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": (''.join(msg)).rstrip('\n')
+                    }
+                }
+            ],
+            "quickReplies": [
+                {
+                    "action": "block",
+                    "messageText": "📃 전체 학사일정 보기",
+                    "label": "📃 전체 학사일정 보기",
+                    "blockId": "6315901ce40f1940e6d747ba"
+                }
+            ]
+        }
+    }
+
+
+def legend(bul):
+    if bul == "R0201":
+        return "학사"
+    elif bul == "R0202":
+        return "수업"
+    elif bul == "R0203":
+        return "행정"
+    elif bul == "R0204":
+        return "기타"
+    elif bul == "R0205":
+        return "휴일"
     else:
-        m_930.write("[{}]\\n{} | {}".format(i.select_one('strong').get_text(), i.select_one('p > .sort').get_text(), i.select_one('p').get_text()[2:]))
-        m_930.write("\\n")
-        m_930.write("\\n")
+        return "기타"
 
-m_930.write('"}}],"quickReplies":[{"action": "block", "messageText": "📃 전체 학사일정 보기", "label": "📃 전체 학사일정 보기", "blockId": "6315901ce40f1940e6d747ba"}]}}')
-m_930.close()
+
+def convert_from_ymd(ymd):
+    return datetime.strptime(ymd, '%Y%m%d').strftime('%Y.%m.%d')
+
+
+stackSubject = []
+topMessage = []
+message = []
+
+topMessage.append("[대림식 알림]\n")
+topMessage.append("\n")
+topMessage.append(f"{today.year}년 {today.month}월 학사일정입니다.\n")
+topMessage.append("\n")
+
+for i in range(len(scheduleData)):
+    if scheduleData[i].get("SUBJECT") is not None:
+        if i < len(scheduleData) - 1:
+            if scheduleData[i + 1].get("SUBJECT") is not None and (
+                    scheduleData[i]["SUBJECT"] == scheduleData[i + 1]["SUBJECT"]):
+                stackSubject.append(scheduleData[i])
+            else:
+                if len(stackSubject) != 0:
+                    if scheduleData[i]["SUBJECT"] == stackSubject[len(stackSubject) - 1]["SUBJECT"]:
+                        stackSubject.append(scheduleData[i])
+                        if (stackSubject[0]["M"] == today.month or stackSubject[len(stackSubject) - 1][
+                            "M"] == today.month):
+                            message.append(
+                                f"[{convert_from_ymd(stackSubject[0]['FROM_YMD'])}~{convert_from_ymd(stackSubject[len(stackSubject) - 1]['FROM_YMD'])}]\n{legend(stackSubject[0]['SCH_TYPE'])} | {stackSubject[0]['SUBJECT']}\n\n")
+                            stackSubject = []
+                        else:
+                            stackSubject = []
+                else:
+                    if scheduleData[i]["M"] == today.month:
+                        message.append(
+                            f"[{convert_from_ymd(scheduleData[i]['FROM_YMD'])}]\n{legend(scheduleData[i]['SCH_TYPE'])} | {scheduleData[i]['SUBJECT']}\n\n")
+        else:
+            if len(stackSubject) != 0:
+                if scheduleData[i - 1].get("SUBJECT") is not None and (
+                        scheduleData[i]["SUBJECT"] == scheduleData[i - 1]["SUBJECT"]):
+                    stackSubject.append(scheduleData[i])
+                    if (stackSubject[0]["M"] == today.month or stackSubject[len(stackSubject) - 1]["M"] == today.month):
+                        message.append(
+                            f"[{convert_from_ymd(stackSubject[0]['FROM_YMD'])}~{convert_from_ymd(stackSubject[len(stackSubject) - 1]['FROM_YMD'])}]\n{legend(stackSubject[0]['SCH_TYPE'])} | {stackSubject[0]['SUBJECT']}\n\n")
+                        stackSubject = []
+                    else:
+                        stackSubject = []
+            else:
+                if scheduleData[i]["M"] == today.month:
+                    message.append(
+                        f"[{convert_from_ymd(scheduleData[i]['FROM_YMD'])}]\n{legend(scheduleData[i]['SCH_TYPE'])} | {scheduleData[i]['SUBJECT']}\n\n")
+
+for item in uniquifiedScheduleListData:
+    if int(item["START_M"]) <= today.month <= int(item["END_M"]) and int(item["START_Y"]) <= today.year <= int(
+            item["END_Y"]):
+        if item["START_D"] == item["END_D"] and item["START_M"] == item["END_M"] and item["START_Y"] == item["END_Y"]:
+            message.append(
+                f"[{item['END_Y']}.{item['END_M']}.{item['END_D']}]\n{legend(item['SCH_TYPE'])} | {item['SUBJECT']}\n\n")
+        else:
+            message.append(
+                f"[{item['START_Y']}.{item['START_M']}.{item['START_D']}~{item['END_Y']}.{item['END_M']}.{item['END_D']}]\n{legend(item['SCH_TYPE'])} | {item['SUBJECT']}\n\n")
+
+with open("./out/schedule/m_schedule.json", 'w') as outfile:
+    json.dump(output(topMessage + sorted(message, key=lambda x: x[:12])), outfile, ensure_ascii=False)

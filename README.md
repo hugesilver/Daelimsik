@@ -35,9 +35,9 @@
     </td>
     </tr>
     </table>
-    <b>대림식</b>은 Python으로 대림대학교 웹사이트 내 식단 페이지와 공지 페이지를<br>
-    <u>Selenium</u>을 통해 데이터를 불러와 <u>BeautifulSoup</u>으로 HTML 문서에서<br>
-    데이터를 추출하여 카카오톡 스킬 형식에 맞게 JSON 파일로 변환합니다.
+    <b>대림식</b>은 대림대학교 웹사이트 내 식단 페이지와 공지 페이지를<br>
+    <u>Selenium</u>을 통해 HTML 문서를 <u>BeautifulSoup</u>으로 혹은<br>
+    <u>교내 API</u>를 통해 데이터를 추출하여 카카오톡 스킬 형식에 맞게 JSON 파일로 변환합니다.
     <br><br>
 * 2️⃣ 서버
     <br><br>
@@ -69,11 +69,6 @@
     작동되고 있습니다. 일정시간마다 Python 파일을 실행하게끔 명령하여 <u>Flask</u>로<br>
     생성된 JSON 파일을 가지고 API 서버를 열어 카카오톡 서버와 통신합니다.
     <br><br>
-* 3️⃣ 사용한 API
-    <br><br>
-    <img src="https://assets.zabbix.com/img/brands/openweather.jpg" width="350px"><br><br>
-    OpenWeatherMap의 "5 Day / 3 Hour Forecast" API를 사용하였습니다.<br>
-    날씨 데이터는 Requests 라이브러리를 통해 추출하여 가공하였습니다.
 
 ## 3️⃣ 카카오톡 챗봇
 <img src="https://t1.kakaocdn.net/kakao_biz_common/prod/img/og/kakaobusiness_thumbnail_0430.png" width="700px"><br><br>

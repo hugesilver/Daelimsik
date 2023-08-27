@@ -50,7 +50,7 @@ for i in range(1, 8):  # 1에서 7까지
     student_message = []
     student_message.append("[대림식 알림]\n")
     student_message.append("\n")
-    student_message.append(f"{day.year}년 {day.month}월 {day.day}일 {days[i - 1]} 학생식당 메뉴입니다.\n")
+    student_message.append(f"{day.year}년 {day.month}월 {day.day}일 {days[i - 1]}\n학생식당 메뉴입니다.\n")
     student_message.append("\n")
 
     if student_menu == "" or i > 5:
@@ -67,7 +67,9 @@ for i in range(1, 8):  # 1에서 7까지
         if blank >= 9:
             student_message.append("메뉴가 없습니다.\n\n")
 
-    student_message.append("※ 식단 데이터는 매일 오전 6시에 업데이트됩니다.\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
+    student_message.append("※ 식단 데이터는 매일 오전 6시에 업데이트됩니다.\n")
+    student_message.append("※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.\n")
+    student_message.append("※ 운영시간: 11:30 ~ 14:00 (석식, 방학 미운영)")
 
     if i < 6:
         with open(f"./out/student/m_student_{file_weekday[i - 1]}.json", 'w') as outfile:
@@ -84,7 +86,7 @@ for i in range(1, 8):  # 1에서 7까지
     profstaff_message = []
     profstaff_message.append("[대림식 알림]\n")
     profstaff_message.append("\n")
-    profstaff_message.append(f"{day.year}년 {day.month}월 {day.day}일 {days[i - 1]} 교직원식당 메뉴입니다.\n")
+    profstaff_message.append(f"{day.year}년 {day.month}월 {day.day}일 {days[i - 1]}\n교직원식당 메뉴입니다.\n")
     profstaff_message.append("\n")
 
     if profstaff_menu == "" or i > 5:
@@ -101,7 +103,10 @@ for i in range(1, 8):  # 1에서 7까지
         if blank >= 9:
             profstaff_message.append("메뉴가 없습니다.\n\n")
 
-    profstaff_message.append("※ 식단 데이터는 매일 오전 6시에 업데이트됩니다.\n※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.")
+    profstaff_message.append("※ 식단 데이터는 매일 오전 6시에 업데이트됩니다.\n")
+    profstaff_message.append("※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.\n")
+    profstaff_message.append("※ 학기 운영시간: 11:40 ~ 14:00 / 17:00 ~ 19:00\n")
+    profstaff_message.append("※ 방학 운영시간: 11:40 ~ 13:30 / 석식 미운영")
 
     if i < 6:
         with open(f"./out/profstaff/m_profstaff_{file_weekday[i - 1]}.json", 'w') as outfile:

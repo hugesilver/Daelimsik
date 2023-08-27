@@ -124,5 +124,8 @@ for item in uniquifiedScheduleListData:
             message.append(
                 f"[{item['START_Y']}.{item['START_M']}.{item['START_D']}~{item['END_Y']}.{item['END_M']}.{item['END_D']}]\n{legend(item['SCH_TYPE'])} | {item['SUBJECT']}\n\n")
 
+if len(message) == 0:
+    message.append("일정이 없습니다.\n\n")
+
 with open("./out/schedule/m_schedule.json", 'w') as outfile:
     json.dump(output(topMessage + sorted(message, key=lambda x: x[:12])), outfile, ensure_ascii=False)

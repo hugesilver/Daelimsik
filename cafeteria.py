@@ -60,7 +60,7 @@ for i in range(1, 8):  # 1에서 7까지
         for j in range(1, 10):  # 1에서 9까지
             if (student_menu[f"CCT{i}{j}"] != "") and (student_menu[f"CCT{i}{j}"] is not None):
                 student_message.append("[{}]\n".format(student_menu[f"CNM1{j}"]))
-                student_message.append("[{}]\n".format(student_menu[f"CCT{i}{j}"]))
+                student_message.append("{}".format(student_menu[f"CCT{i}{j}"]).replace("\r", "").rstrip("\n") + "\n\n")
             else:
                 blank = blank + 1
 
@@ -96,7 +96,7 @@ for i in range(1, 8):  # 1에서 7까지
         for j in range(1, 10):  # 1에서 9까지
             if (profstaff_menu[f"CCT{i}{j}"] != "") and (profstaff_menu[f"CCT{i}{j}"] is not None):
                 profstaff_message.append("[{}]\n".format(profstaff_menu[f"CNM1{j}"]))
-                profstaff_message.append("[{}]\n".format(profstaff_menu[f"CCT{i}{j}"]))
+                profstaff_message.append("{}".format(profstaff_menu[f"CCT{i}{j}"]).replace("\r", "").rstrip("\n") + "\n\n")
             else:
                 blank = blank + 1
 

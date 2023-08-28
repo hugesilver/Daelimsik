@@ -123,7 +123,8 @@ station_to_school(anyang_tr, anyang_to_school)
 anyang_to_school.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
 
 with open("./out/schoolbus/m_anyang_to_school.json", 'w') as outfile:
-    json.dump(output(anyang_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 안양역 정류장", "64eb29d7e4f55f6afe21492f")]), outfile,
+    json.dump(output(anyang_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"),
+                                        quickreply("🚏 안양역 정류장", "64eb29d7e4f55f6afe21492f")]), outfile,
               ensure_ascii=False)
 
 ### 학교에서 안양역 ###
@@ -140,7 +141,8 @@ school_to_station(anyang_tr, school_to_anyang)
 school_to_anyang.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
 
 with open("./out/schoolbus/m_school_to_anyang.json", 'w') as outfile:
-    json.dump(output(school_to_anyang, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 안양역 정류장", "64eb29d7e4f55f6afe21492f")]), outfile,
+    json.dump(output(school_to_anyang, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"),
+                                        quickreply("🚏 안양역 정류장", "64eb29d7e4f55f6afe21492f")]), outfile,
               ensure_ascii=False)
 
 ######################################### 범계역 #########################################
@@ -161,7 +163,8 @@ station_to_school(beomgye_tr, beomgye_to_school)
 beomgye_to_school.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
 
 with open("./out/schoolbus/m_beomgye_to_school.json", 'w') as outfile:
-    json.dump(output(beomgye_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 범계역 정류장", "64eb29e9e4f55f6afe214935")]), outfile,
+    json.dump(output(beomgye_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"),
+                                         quickreply("🚏 범계역 정류장", "64eb29e9e4f55f6afe214935")]), outfile,
               ensure_ascii=False)
 
 ### 학교에서 범계역 ###
@@ -178,7 +181,8 @@ school_to_station(beomgye_tr, school_to_beomgye)
 school_to_beomgye.append("\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다.")
 
 with open("./out/schoolbus/m_school_to_beomgye.json", 'w') as outfile:
-    json.dump(output(school_to_beomgye, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"), quickreply("🚏 범계역 정류장", "64eb29e9e4f55f6afe214935")]), outfile,
+    json.dump(output(school_to_beomgye, [quickreply("🚌 전체 셔틀버스 배차시간", "633e69ddca1fd2777db9a2a8"),
+                                         quickreply("🚏 범계역 정류장", "64eb29e9e4f55f6afe214935")]), outfile,
               ensure_ascii=False)
 
 

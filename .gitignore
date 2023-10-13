@@ -1,5 +1,8 @@
+__pycache__/
 .idea/
 .DS_Store
-chromedriver
-img/
 out/
+old/
+chromedriver
+private_variables.py
+test.py

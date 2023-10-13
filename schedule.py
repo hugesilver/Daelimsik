@@ -3,6 +3,8 @@ from datetime import date, datetime
 
 import requests
 
+from private_variables import block_id_schedule
+
 today = date.today()
 
 scheduleData_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
@@ -33,7 +35,7 @@ def output(msg):
             "outputs": [
                 {
                     "simpleText": {
-                        "text": (''.join(msg)).rstrip('\n')
+                        "text": msg.replace('\\n', '\n').rstrip('\n')
                     }
                 }
             ],
@@ -42,7 +44,7 @@ def output(msg):
                     "action": "block",
                     "messageText": "📃 전체 학사일정 보기",
                     "label": "📃 전체 학사일정 보기",
-                    "blockId": "6315901ce40f1940e6d747ba"
+                    "blockId": block_id_schedule
                 }
             ]
         }
@@ -69,13 +71,13 @@ def convert_from_ymd(ymd):
 
 
 stackSubject = []
-topMessage = []
+topMessage = ""
 message = []
 
-topMessage.append("[대림식 알림]\n")
-topMessage.append("\n")
-topMessage.append(f"{today.year}년 {today.month}월 학사일정입니다.\n")
-topMessage.append("\n")
+topMessage += "[대림식 알림]\n"
+topMessage += "\n"
+topMessage += f"{today.year}년 {today.month}월 학사일정입니다.\n"
+topMessage += "\n"
 
 for i in range(len(scheduleData)):
     if scheduleData[i].get("SUBJECT") is not None:
@@ -128,4 +130,4 @@ if len(message) == 0:
     message.append("일정이 없습니다.\n\n")
 
 with open("./out/schedule/m_schedule.json", 'w') as outfile:
-    json.dump(output(topMessage + sorted(message, key=lambda x: x[:12])), outfile, ensure_ascii=False)
+    json.dump(output(topMessage + str(sorted(message, key=lambda x: x[:12]))), outfile, ensure_ascii=False)

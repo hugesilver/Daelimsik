@@ -1,6 +1,8 @@
 from flask import Flask
 import json
 
+from private_variables import port
+
 app = Flask(__name__)
 
 
@@ -174,4 +176,4 @@ def help_beomgye():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port="", debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)

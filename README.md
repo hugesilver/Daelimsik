@@ -1,5 +1,5 @@
 # 🟡 카카오톡 학식봇 대림식
-<img src="https://github.com/hugesilver/Daelimsik/blob/main/img/Daelimsik_logo_Authority.jpg?raw=true" width="300px" height="300px"><br>
+<img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/Daelimsik_logo_Authority.jpg?raw=true" width="300px" height="300px"><br>
 
 ## 1️⃣ 소개
 2022년 여름방학에 개인적으로 진행한 첫 파이썬 프로젝트입니다.<br>
@@ -14,13 +14,10 @@
     <table>
     <tr>
     <td align="center">
-    <img src="https://cdn.iconscout.com/icon/free/png-256/python-2-226051.png" width="100px" height="100px">
+    <img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/logo_python.png?raw=true" width="100px" height="100px">
     </td>
     <td align="center">
-    <img src="https://camo.githubusercontent.com/74ed64243ba05754329bc527cd4240ebd1c087a1/68747470733a2f2f73656c656e69756d2e6465762f696d616765732f73656c656e69756d5f6c6f676f5f7371756172655f677265656e2e706e67" width="100px" height="100px">
-    </td>
-    <td align="center">
-    <img src="https://www.crummy.com/software/BeautifulSoup/10.1.jpg" width="100px" height="100px">
+    <img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/logo_bs.jpeg?raw=true" width="100px" height="100px">
     </td>
     </tr>
     <tr>
@@ -28,29 +25,26 @@
     <b>Python</b>
     </td>
     <td align="center">
-    <b>Selenium</b>
-    </td>
-    <td align="center">
     <b>BeautifulSoup</b>
     </td>
     </tr>
     </table>
-    <b>대림식</b>은 대림대학교 웹사이트 내 식단 페이지와 공지 페이지를<br>
-    <u>Selenium</u>을 통해 HTML 문서를 <u>BeautifulSoup</u>으로 혹은<br>
-    <u>교내 API</u>를 통해 데이터를 추출하여 카카오톡 스킬 형식에 맞게 JSON 파일로 변환합니다.
+    <b>대림식</b>은 대림대학교 웹사이트 내 식단 페이지와 공지 페이지<br>
+    HTML 문서를 <u>BeautifulSoup</u>으로 혹은 <u>교내 서버</u>를 통해 <br>
+    데이터를 추출하여 카카오톡 스킬 형식에 맞게 JSON 파일로 변환합니다.
     <br><br>
 * 2️⃣ 서버
     <br><br>
     <table>
     <tr>
     <td align="center">
-    <img src="https://cdn.iconscout.com/icon/free/png-256/aws-1869025-1583149.png" width="100px" height="100px">
+    <img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/logo_aws.png?raw=true" width="100px" height="100px">
     </td>
     <td align="center">
-    <img src="https://cdn.iconscout.com/icon/free/png-256/ubuntu-1-202420.png" width="100px" height="100px">
+    <img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/logo_ubuntu.png?raw=true" width="100px" height="100px">
     </td>
     <td align="center">
-    <img src="https://cdn.iconscout.com/icon/free/png-256/flask-51-285137.png" width="100px" height="100px">
+    <img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/logo_flask.png?raw=true" width="100px" height="100px">
     </td>
     </tr>
     <tr>
@@ -71,7 +65,7 @@
     <br><br>
 
 ## 3️⃣ 카카오톡 챗봇
-<img src="https://t1.kakaocdn.net/kakao_biz_common/prod/img/og/kakaobusiness_thumbnail_0430.png" width="700px"><br><br>
+<img src="https://github.com/hugesilver/Daelimsik/blob/main/readme/image_kakao_business.png?raw=true" width="700px"><br><br>
 카카오톡 채널을 운영하기 위해서는 카카오비즈니스의 카카오 i 오픈빌더 서비스를 이용해야합니다.<br>
 단순 비즈니스 채널을 생성해 사용자와 1:1 채팅을 할 수 있는 서비스도 이용가능하지만,<br>
 챗봇 기능을 사용하여 상담원이 근무하는 시간 외에도 소통할 수 있다는 좋은 기능입니다.<br>

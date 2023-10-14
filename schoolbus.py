@@ -34,164 +34,97 @@ def quickreply(label, blockid):
     }
 
 
-def station_to_school(loc):
+def get_table_data(loc, start_from):
     message = ""
 
+    def bus_interval(text):
+        if text and not text.isspace() and text != "해당시간":
+            return f" (배차간격: {text})"
+        else:
+            return ''
+
     for tr in loc:
-        if ((tr.select_one('td:nth-child(1)').get_text()) in ["휴게시간", "", " ", "&nbsp;", " "]):
-            pass
-        elif (((tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == False) and (
-                (tr.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]))):
-            pass
-        elif (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == True:
-            if (tr.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]):
-                pass
-            else:
-                message += "- "
-                message += tr.select_one('td:nth-child(1)').get_text() + " "
-                if (tr.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                    message += "\n"
-                else:
-                    message += "(배차간격: {})\n".format(tr.select_one('td:nth-child(3)').get_text())
-        elif (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-            if (tr.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
-                pass
-            else:
-                message += "- "
-                message += tr.select_one('td:nth-child(2)').get_text() + " "
-                if (tr.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                    message += "\n"
-                else:
-                    message += "(배차간격: {})\n".format(tr.select_one('td:nth-child(4)').get_text())
+        td = tr.find_all('td')
+        if len(td) == 4:
+            if td[start_from + 1].text and not td[start_from + 1].text.isspace():
+                message += f"- {td[start_from + 1].text}{bus_interval(td[-1].text)}\n"
+        elif len(td) == 3:
+            if td[start_from].text and not td[start_from].text.isspace():
+                message += f"- {td[start_from].text}{bus_interval(td[-1].text)}\n"
 
     return message
 
 
-def school_to_station(loc):
-    message = ""
+start_from_station = 0
+start_from_school = 1
 
-    for tr in loc:
-        if ((tr.select_one('td:nth-child(1)').get_text()) == "휴게시간") or (
-                tr.select_one('td:nth-child(1)[colspan]')):
-            pass
-        elif (tr.select_one('td:nth-child(1)').get_text() in ["", " ", "&nbsp;", " "]) or (
-                (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == True):
-            if (tr.select_one('td:nth-child(2)').get_text() in ["", " ", "&nbsp;", " "]):
-                pass
-            else:
-                message += "- "
-                message += tr.select_one('td:nth-child(2)').get_text() + " "
-                if (tr.select_one('td:nth-child(3)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                    message += "\n"
-                else:
-                    message += "(배차간격: {})\n".format(tr.select_one('td:nth-child(3)').get_text())
-        elif (tr.select_one('td:nth-child(1)').get_text())[1].isdigit() == False:
-            if (tr.select_one('td:nth-child(3)').get_text() in ["", " ", "&nbsp;", " "]):
-                pass
-            else:
-                message += "- "
-                message += tr.select_one('td:nth-child(3)').get_text() + " "
-                if (tr.select_one('td:nth-child(4)').get_text() in ["해당시간", "", " ", "&nbsp;", " "]):
-                    message += "\n"
-                else:
-                    message += "(배차간격: {})\n".format(tr.select_one('td:nth-child(4)').get_text())
-
-    return message
-
-
-######################################### 안양역 #########################################
+# 버스 정보
 
 anyang_tr = soup.select_one('.lineTop_tbArea > table > tbody').select('tr')
-
-### 안양역에서 학교 ###
-
-anyang_to_school = ""
-
-anyang_to_school += "[대림식 알림]\n"
-anyang_to_school += "\n"
-anyang_to_school += "안양역에서 학교로 이동하는 셔틀버스 안내입니다.\n"
-anyang_to_school += "\n"
-
-anyang_to_school += station_to_school(anyang_tr)
-
-anyang_to_school += "\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다."
-
-with open("./out/schoolbus/m_anyang_to_school.json", 'w') as outfile:
-    json.dump(output(anyang_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", block_id_schoolbus_all),
-                                        quickreply("🚏 안양역 정류장", block_id_schoolbus_anyang)]), outfile,
-              ensure_ascii=False)
-
-### 학교에서 안양역 ###
-
-school_to_anyang = ""
-
-school_to_anyang += "[대림식 알림]\n"
-school_to_anyang += "\n"
-school_to_anyang += "학교에서 안양역으로 이동하는 셔틀버스 안내입니다.\n"
-school_to_anyang += "\n"
-
-school_to_anyang += school_to_station(anyang_tr)
-
-school_to_anyang += "\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다."
-
-with open("./out/schoolbus/m_school_to_anyang.json", 'w') as outfile:
-    json.dump(output(school_to_anyang, [quickreply("🚌 전체 셔틀버스 배차시간", block_id_schoolbus_all),
-                                        quickreply("🚏 안양역 정류장", block_id_schoolbus_anyang)]), outfile,
-              ensure_ascii=False)
-
-######################################### 범계역 #########################################
-
 beomgye_tr = soup.select_one('.mT30 > table > tbody').select('tr')
 
-### 범계역에서 학교 ###
 
-beomgye_to_school = ""
+def make_message(text, station, start_from, filename, busstop_label, busstop_block_id):
+    message = ""
 
-beomgye_to_school += "[대림식 알림]\n"
-beomgye_to_school += "\n"
-beomgye_to_school += "범계역에서 학교로 이동하는 셔틀버스 안내입니다.\n"
-beomgye_to_school += "\n"
+    message += "[대림식 알림]\n"
+    message += "\n"
+    message += f"{text} 이동하는 셔틀버스 안내입니다.\n"
+    message += "\n"
 
-beomgye_to_school += station_to_school(beomgye_tr)
+    message += get_table_data(station, start_from)
 
-beomgye_to_school += "\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다."
+    message += "\n※ 교통 혼잡 및 신호 대기로 인해 운행 시간이 변동될 수 있습니다."
 
-with open("./out/schoolbus/m_beomgye_to_school.json", 'w') as outfile:
-    json.dump(output(beomgye_to_school, [quickreply("🚌 전체 셔틀버스 배차시간", block_id_schoolbus_all),
-                                         quickreply("🚏 범계역 정류장", block_id_schoolbus_beomgye)]), outfile,
-              ensure_ascii=False)
-
-### 학교에서 범계역 ###
-
-school_to_beomgye = ""
-
-school_to_beomgye += "[대림식 알림]\n"
-school_to_beomgye += "\n"
-school_to_beomgye += "학교에서 범계역으로 이동하는 셔틀버스 안내입니다.\n"
-school_to_beomgye += "\n"
-
-school_to_beomgye += school_to_station(beomgye_tr)
-
-school_to_beomgye += "\n※ 교통 혼잡 및 신호대기로 인해 운행시간이 변동될 수 있습니다."
-
-with open("./out/schoolbus/m_school_to_beomgye.json", 'w') as outfile:
-    json.dump(output(school_to_beomgye, [quickreply("🚌 전체 셔틀버스 배차시간", block_id_schoolbus_all),
-                                         quickreply("🚏 범계역 정류장", block_id_schoolbus_beomgye)]), outfile,
-              ensure_ascii=False)
+    with open(f"./out/schoolbus/{filename}", 'w') as outfile:
+        json.dump(
+            output(message,
+                   [quickreply("🚌 전체 셔틀버스 배차시간", block_id_schoolbus_all), quickreply(busstop_label, busstop_block_id)]),
+            outfile,
+            ensure_ascii=False)
 
 
-######################################### 정류장 #########################################
+# 안양역
+make_message("안양역에서 학교로",
+             anyang_tr,
+             start_from_station,
+             "m_anyang_to_school.json",
+             "안양역 정류장",
+             block_id_schoolbus_anyang)
+make_message("학교에서 안양역으로",
+             anyang_tr,
+             start_from_school,
+             "m_school_to_anyang.json",
+             "안양역 정류장",
+             block_id_schoolbus_anyang)
+
+# 범계역
+make_message("범계역에서 학교로",
+             beomgye_tr,
+             start_from_station,
+             "m_beomgye_to_school.json",
+             "범계역 정류장",
+             block_id_schoolbus_beomgye)
+make_message("학교에서 범계역으로",
+             beomgye_tr,
+             start_from_school,
+             "m_school_to_beomgye.json",
+             "범계역 정류장",
+             block_id_schoolbus_beomgye)
+
+
+# 정류장 정보
 
 def helpoutput(info, alttext):
     if info:
         text = ""
-        if info.find('ul').find("li"):
-            location = info.find('ul').find("li")
-            if location.find("b"):
-                location.find("b").decompose()
+        if info.find("ul").find("li"):
+            location = info.find("ul").find("li")
+            if location.find('b'):
+                location.find('b').decompose()
             if location.find(string=lambda text: isinstance(text, Comment)):
                 location.find(string=lambda text: isinstance(text, Comment)).extract()
-            text = location.get_text().replace("\n", "").rstrip()
+            text = location.get_text().replace("\n", '').rstrip()
         return {
             "version": "2.0",
             "template": {
@@ -212,8 +145,8 @@ def helpoutput(info, alttext):
         }
 
 
-anyang_info = soup.select_one('.comewayDiv')
-beomgye_info = soup.select_one('.mT70')
+anyang_info = soup.select_one(".comewayDiv")
+beomgye_info = soup.select_one(".mT70")
 
 with open("./out/schoolbus/m_help_anyang.json", 'w') as outfile:
     json.dump(helpoutput(anyang_info, "안양역 정류장"), outfile, ensure_ascii=False)

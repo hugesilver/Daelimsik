@@ -35,7 +35,7 @@ def output(msg):
             "outputs": [
                 {
                     "simpleText": {
-                        "text": msg.replace('\\n', '\n').rstrip('\n')
+                        "text": msg.rstrip('\n')
                     }
                 }
             ],
@@ -130,4 +130,4 @@ if len(message) == 0:
     message.append("일정이 없습니다.\n\n")
 
 with open("./out/schedule/m_schedule.json", 'w') as outfile:
-    json.dump(output(topMessage + str(sorted(message, key=lambda x: x[:12]))), outfile, ensure_ascii=False)
+    json.dump(output(topMessage + ''.join(sorted(message, key=lambda x: x[:12]))), outfile, ensure_ascii=False)

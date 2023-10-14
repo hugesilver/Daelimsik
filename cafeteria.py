@@ -70,7 +70,6 @@ for i in range(1, 8):  # 1에서 7까지
         if blank >= 9:
             student_message += "메뉴가 없습니다.\n\n"
 
-    student_message += "※ 식단 데이터는 매일 오전 6시에 업데이트됩니다.\n"
     student_message += "※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.\n"
     student_message += "※ 운영시간: 11:30 ~ 14:00 (석식, 방학 미운영)"
 
@@ -106,7 +105,6 @@ for i in range(1, 8):  # 1에서 7까지
         if blank >= 9:
             profstaff_message += "메뉴가 없습니다.\n\n"
 
-    profstaff_message += "※ 식단 데이터는 매일 오전 6시에 업데이트됩니다.\n"
     profstaff_message += "※ 식당 상황에 따라 메뉴가 변경될 수 있습니다.\n"
     profstaff_message += "※ 학기 운영시간: 11:40 ~ 14:00 / 17:00 ~ 19:00\n"
     profstaff_message += "※ 방학 운영시간: 11:40 ~ 13:30 / 석식 미운영"

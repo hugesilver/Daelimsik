@@ -89,13 +89,13 @@ make_message("안양역에서 학교로",
              anyang_tr,
              start_from_station,
              "m_anyang_to_school.json",
-             "안양역 정류장",
+             "🚏 안양역 정류장",
              block_id_schoolbus_anyang)
 make_message("학교에서 안양역으로",
              anyang_tr,
              start_from_school,
              "m_school_to_anyang.json",
-             "안양역 정류장",
+             "🚏 안양역 정류장",
              block_id_schoolbus_anyang)
 
 # 범계역
@@ -103,13 +103,13 @@ make_message("범계역에서 학교로",
              beomgye_tr,
              start_from_station,
              "m_beomgye_to_school.json",
-             "범계역 정류장",
+             "🚏 범계역 정류장",
              block_id_schoolbus_beomgye)
 make_message("학교에서 범계역으로",
              beomgye_tr,
              start_from_school,
              "m_school_to_beomgye.json",
-             "범계역 정류장",
+             "🚏 범계역 정류장",
              block_id_schoolbus_beomgye)
 
 

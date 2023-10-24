@@ -1,174 +1,69 @@
 import json
+import os.path
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.exceptions import HTTPException
 
-from fastapi import FastAPI
+from private_variables import PATH_CAFETERIA, PATH_ANNOUNCEMENT, PATH_SCHEDULE, \
+    PATH_SCHOOLBUS
+
+error_message = {
+    "version": "2.0",
+    "template": {
+        "outputs": [
+            {
+                "simpleText": {
+                    "text": "[대림식 알림]\n\n알 수 없는 오류가 발생하였습니다."
+                }
+            }
+        ]
+    }
+}
 
 app = FastAPI()
 
 
-@app.get('/')
+@app.get("/")
 def main():
-    return "대림식 연결 성공"
+    return HTMLResponse(content="<h2>대림식 연결 성공</h2>", status_code=200)
 
 
-# 학생식당
-
-@app.post('/student')
-def student():
-    with open('./out/student/m_student_today.json', 'r') as student:
-        m_student = json.load(student)
-    return m_student
-
-
-@app.post('/student/mon')
-def student_mon():
-    with open('./out/student/m_student_mon.json', 'r') as student_mon:
-        m_student_mon = json.load(student_mon)
-    return m_student_mon
+def load_json_file(file_path):
+    if os.path.isfile(file_path):
+        with open(file_path, "r") as file:
+            data = json.load(file)
+        return data
+    return error_message
 
 
-@app.post('/student/tue')
-def student_tue():
-    with open('./out/student/m_student_tue.json', 'r') as student_tue:
-        m_student_tue = json.load(student_tue)
-    return m_student_tue
+@app.exception_handler(404)
+async def error(request: Request, exc: HTTPException):
+    return error_message
 
 
-@app.post('/student/wed')
-def student_wed():
-    with open('./out/student/m_student_wed.json', 'r') as student_wed:
-        m_student_wed = json.load(student_wed)
-    return m_student_wed
-
-
-@app.post('/student/thu')
-def student_thu():
-    with open('./out/student/m_student_thu.json', 'r') as student_thu:
-        m_student_thu = json.load(student_thu)
-    return m_student_thu
-
-
-@app.post('/student/fri')
-def student_fri():
-    with open('./out/student/m_student_fri.json', 'r') as student_fri:
-        m_student_fri = json.load(student_fri)
-    return m_student_fri
-
-
-# 교직원식당
-
-@app.post('/profstaff')
-def profstaff():
-    with open('./out/profstaff/m_profstaff_today.json', 'r') as profstaff:
-        m_profstaff = json.load(profstaff)
-    return m_profstaff
-
-
-@app.post('/profstaff/mon')
-def profstaff_mon():
-    with open('./out/profstaff/m_profstaff_mon.json', 'r') as profstaff_mon:
-        m_profstaff_mon = json.load(profstaff_mon)
-    return m_profstaff_mon
-
-
-@app.post('/profstaff/tue')
-def profstaff_tue():
-    with open('./out/profstaff/m_profstaff_tue.json', 'r') as profstaff_tue:
-        m_profstaff_tue = json.load(profstaff_tue)
-    return m_profstaff_tue
-
-
-@app.post('/profstaff/wed')
-def profstaff_wed():
-    with open('./out/profstaff/m_profstaff_wed.json', 'r') as profstaff_wed:
-        m_profstaff_wed = json.load(profstaff_wed)
-    return m_profstaff_wed
-
-
-@app.post('/profstaff/thu')
-def profstaff_thu():
-    with open('./out/profstaff/m_profstaff_thu.json', 'r') as profstaff_thu:
-        m_profstaff_thu = json.load(profstaff_thu)
-    return m_profstaff_thu
-
-
-@app.post('/profstaff/fri')
-def profstaff_fri():
-    with open('./out/profstaff/m_profstaff_fri.json', 'r') as profstaff_fri:
-        m_profstaff_fri = json.load(profstaff_fri)
-    return m_profstaff_fri
+# 식당메뉴
+@app.post("/cafeteria/{where}/{day}")
+def student(where: str, day: str):
+    path = f"{PATH_CAFETERIA}/{where}/m_{where}_{day}.json"
+    return load_json_file(path)
 
 
 # 공지사항
-
-@app.post('/bachelor')
-def bachelor():
-    with open('./out/announcement/l_bachelor.json', 'r') as bachelor:
-        l_bachelor = json.load(bachelor)
-    return l_bachelor
-
-
-@app.post('/scholarship')
-def scholarship():
-    with open('./out/announcement/l_scholarship.json', 'r') as scholarship:
-        l_scholarship = json.load(scholarship)
-    return l_scholarship
-
-
-@app.post('/administrative')
-def administrative():
-    with open('./out/announcement/l_administrative.json', 'r') as administrative:
-        l_administrative = json.load(administrative)
-    return l_administrative
+@app.post("/announcement/{category}")
+def announcement(category: str):
+    path = f"{PATH_ANNOUNCEMENT}/l_{category}.json"
+    return load_json_file(path)
 
 
 # 학사일정
-
-@app.post('/schedule')
+@app.post("/schedule")
 def schedule():
-    with open('./out/schedule/m_schedule.json', 'r') as schedule:
-        m_schedule = json.load(schedule)
-    return m_schedule
+    path = f"{PATH_SCHEDULE}/m_schedule.json"
+    return load_json_file(path)
 
 
 # 셔틀버스
-
-@app.post('/anyang_to_school')
-def anyang_to_school():
-    with open('./out/schoolbus/m_anyang_to_school.json', 'r') as anyang_to_school:
-        m_anyang_to_school = json.load(anyang_to_school)
-    return m_anyang_to_school
-
-
-@app.post('/school_to_anyang')
-def school_to_anyang():
-    with open('./out/schoolbus/m_school_to_anyang.json', 'r') as school_to_anyang:
-        m_school_to_anyang = json.load(school_to_anyang)
-    return m_school_to_anyang
-
-
-@app.post('/beomgye_to_school')
-def beomgye_to_school():
-    with open('./out/schoolbus/m_beomgye_to_school.json', 'r') as beomgye_to_school:
-        m_beomgye_to_school = json.load(beomgye_to_school)
-    return m_beomgye_to_school
-
-
-@app.post('/school_to_beomgye')
-def school_to_beomgye():
-    with open('./out/schoolbus/m_school_to_beomgye.json', 'r') as school_to_beomgye:
-        m_school_to_beomgye = json.load(school_to_beomgye)
-    return m_school_to_beomgye
-
-
-@app.post('/help_anyang')
-def help_anyang():
-    with open('./out/schoolbus/m_help_anyang.json', 'r') as help_anyang:
-        m_help_anyang = json.load(help_anyang)
-    return m_help_anyang
-
-
-@app.post('/help_beomgye')
-def help_beomgye():
-    with open('./out/schoolbus/m_help_beomgye.json', 'r') as help_beomgye:
-        m_help_beomgye = json.load(help_beomgye)
-    return m_help_beomgye
+@app.post("/schoolbus/{route}")
+def schoolbus(route: str):
+    path = f"{PATH_SCHOOLBUS}/m_{route}.json"
+    return load_json_file(path)

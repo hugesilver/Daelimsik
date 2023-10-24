@@ -1,6 +1,9 @@
 import json
+import os
 
 import requests
+
+from private_variables import PATH_ANNOUNCEMENT
 
 
 def output(title, items, buttonlabel, weblink):
@@ -38,6 +41,9 @@ def listitem(title, desc, link):
     }
 
 
+if not os.path.isdir(PATH_ANNOUNCEMENT):
+    os.makedirs(PATH_ANNOUNCEMENT)
+
 ######################################### 행정공지 #########################################
 
 url30 = "https://www.daelim.ac.kr/ajaxf/FrBoardSvc/BBSViewList.do?pageNo=1&MENU_ID=30&SITE_NO=2&BOARD_SEQ=1"
@@ -51,7 +57,7 @@ for i in range(5):
         f"https://www.daelim.ac.kr/cms/FrBoardCon/BoardView.do?MENU_ID=30&SITE_NO=2&BOARD_SEQ=1&BBS_SEQ={data30[i]['BBS_SEQ']}"
     ))
 
-with open("./out/announcement/l_administrative.json", 'w') as outfile:
+with open(f"{PATH_ANNOUNCEMENT}/l_administrative.json", 'w') as outfile:
     json.dump(output("대림대학교 행정 공지사항", listitem30, "행정 공지사항 전체보기",
                      "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=30#page1"), outfile, ensure_ascii=False)
 
@@ -68,7 +74,7 @@ for i in range(5):
         f"https://www.daelim.ac.kr/cms/FrBoardCon/BoardView.do?MENU_ID=900&SITE_NO=2&BOARD_SEQ=8&BBS_SEQ={data900[i]['BBS_SEQ']}"
     ))
 
-with open("./out/announcement/l_bachelor.json", 'w') as outfile:
+with open(f"{PATH_ANNOUNCEMENT}/l_bachelor.json", 'w') as outfile:
     json.dump(output("대림대학교 학사 공지사항", listitem900, "학사 공지사항 전체보기",
                      "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=900#page1"), outfile, ensure_ascii=False)
 
@@ -85,6 +91,6 @@ for i in range(5):
         f"https://www.daelim.ac.kr/cms/FrBoardCon/BoardView.do?MENU_ID=990&SITE_NO=2&BOARD_SEQ=9&BBS_SEQ={data990[i]['BBS_SEQ']}"
     ))
 
-with open("./out/announcement/l_scholarship.json", 'w') as outfile:
+with open(f"{PATH_ANNOUNCEMENT}/l_scholarship.json", 'w') as outfile:
     json.dump(output("대림대학교 장학 공지사항", listitem990, "장학 공지사항 전체보기",
                      "https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=990#page1"), outfile, ensure_ascii=False)

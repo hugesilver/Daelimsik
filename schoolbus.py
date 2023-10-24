@@ -1,9 +1,11 @@
 import json
+import os.path
 
 import requests
 from bs4 import BeautifulSoup, Comment
 
-from private_variables import block_id_schoolbus_anyang, block_id_schoolbus_beomgye, block_id_schoolbus_all
+from private_variables import BLOCK_ID_SCHOOLBUS_ANYANG, BLOCK_ID_SCHOOLBUS_BEOMGYE, BLOCK_ID_SCHOOLBUS_ALL, \
+    PATH_SCHOOLBUS
 
 bus = requests.get('https://www.daelim.ac.kr/cms/FrCon/index.do?MENU_ID=460')
 soup = BeautifulSoup(bus.text, 'html.parser')
@@ -76,10 +78,13 @@ def make_message(text, station, start_from, filename, busstop_label, busstop_blo
 
     message += "\n※ 교통 혼잡 및 신호 대기로 인해 운행 시간이 변동될 수 있습니다."
 
-    with open(f"./out/schoolbus/{filename}", 'w') as outfile:
+    if not os.path.isdir(PATH_SCHOOLBUS):
+        os.makedirs(PATH_SCHOOLBUS)
+
+    with open(f"{PATH_SCHOOLBUS}/{filename}", 'w') as outfile:
         json.dump(
             output(message,
-                   [quickreply("🚌 전체 셔틀버스 배차시간", block_id_schoolbus_all), quickreply(busstop_label, busstop_block_id)]),
+                   [quickreply("🚌 전체 셔틀버스 배차시간", BLOCK_ID_SCHOOLBUS_ALL), quickreply(busstop_label, busstop_block_id)]),
             outfile,
             ensure_ascii=False)
 
@@ -90,13 +95,13 @@ make_message("안양역에서 학교로",
              start_from_station,
              "m_anyang_to_school.json",
              "🚏 안양역 정류장",
-             block_id_schoolbus_anyang)
+             BLOCK_ID_SCHOOLBUS_ANYANG)
 make_message("학교에서 안양역으로",
              anyang_tr,
              start_from_school,
              "m_school_to_anyang.json",
              "🚏 안양역 정류장",
-             block_id_schoolbus_anyang)
+             BLOCK_ID_SCHOOLBUS_ANYANG)
 
 # 범계역
 make_message("범계역에서 학교로",
@@ -104,13 +109,13 @@ make_message("범계역에서 학교로",
              start_from_station,
              "m_beomgye_to_school.json",
              "🚏 범계역 정류장",
-             block_id_schoolbus_beomgye)
+             BLOCK_ID_SCHOOLBUS_BEOMGYE)
 make_message("학교에서 범계역으로",
              beomgye_tr,
              start_from_school,
              "m_school_to_beomgye.json",
              "🚏 범계역 정류장",
-             block_id_schoolbus_beomgye)
+             BLOCK_ID_SCHOOLBUS_BEOMGYE)
 
 
 # 정류장 정보
@@ -148,7 +153,7 @@ def helpoutput(info, alttext):
 anyang_info = soup.select_one(".comewayDiv")
 beomgye_info = soup.select_one(".mT70")
 
-with open("./out/schoolbus/m_help_anyang.json", 'w') as outfile:
+with open(f"{PATH_SCHOOLBUS}/m_help_anyang.json", 'w') as outfile:
     json.dump(helpoutput(anyang_info, "안양역 정류장"), outfile, ensure_ascii=False)
-with open("./out/schoolbus/m_help_beomgye.json", 'w') as outfile:
+with open(f"{PATH_SCHOOLBUS}/m_help_beomgye.json", 'w') as outfile:
     json.dump(helpoutput(beomgye_info, "범계역 정류장"), outfile, ensure_ascii=False)

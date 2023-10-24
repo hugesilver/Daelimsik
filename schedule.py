@@ -1,9 +1,10 @@
 import json
 from datetime import date, datetime
+import os.path
 
 import requests
 
-from private_variables import block_id_schedule
+from private_variables import BLOCK_ID_SCHEDULE, PATH_SCHEDULE
 
 today = date.today()
 
@@ -44,7 +45,7 @@ def output(msg):
                     "action": "block",
                     "messageText": "📃 전체 학사일정 보기",
                     "label": "📃 전체 학사일정 보기",
-                    "blockId": block_id_schedule
+                    "blockId": BLOCK_ID_SCHEDULE
                 }
             ]
         }
@@ -129,5 +130,8 @@ for item in uniquifiedScheduleListData:
 if len(message) == 0:
     message.append("일정이 없습니다.\n\n")
 
-with open("./out/schedule/m_schedule.json", 'w') as outfile:
+if not os.path.isdir(PATH_SCHEDULE):
+    os.makedirs(PATH_SCHEDULE)
+
+with open(f"{PATH_SCHEDULE}/m_schedule.json", 'w') as outfile:
     json.dump(output(topMessage + ''.join(sorted(message, key=lambda x: x[:12]))), outfile, ensure_ascii=False)

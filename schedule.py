@@ -8,25 +8,25 @@ from private_variables import BLOCK_ID_SCHEDULE, PATH_SCHEDULE
 
 today = date.today()
 
-scheduleData_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
-scheduleData = requests.get(scheduleData_url).json()["data"]
+schedule_data_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
+schedule_data = requests.get(schedule_data_url).json()["data"]
 
-scheduleListData_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleListData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
-scheduleListData = requests.get(scheduleListData_url).json()["data"]
+schedule_list_data_url = f"https://www.daelim.ac.kr/ajaxf/FrScheduleSvc/ScheduleListData.do?SCH_YEAR={today.year - 1 if today.month < 3 else today.year}&SCH_DEPT_CD=2"
+schedule_list_data = requests.get(schedule_list_data_url).json()["data"]
 
-uniqueSubject = []
-uniquifiedScheduleListData = []
+unique_subject = []
+uniquified_schedule_list_data = []
 
 # SUBJECT 단일화
 
-for sd in scheduleData:
+for sd in schedule_data:
     if sd.get("SUBJECT") is not None:
-        uniqueSubject.append(sd["SUBJECT"])
+        unique_subject.append(sd["SUBJECT"])
 
-for sld in scheduleListData:
+for sld in schedule_list_data:
     if sld.get("SUBJECT") is not None:
-        if sld["SUBJECT"] not in uniqueSubject:
-            uniquifiedScheduleListData.append(sld)
+        if sld["SUBJECT"] not in unique_subject:
+            uniquified_schedule_list_data.append(sld)
 
 
 def output(msg):
@@ -71,53 +71,54 @@ def convert_from_ymd(ymd):
     return datetime.strptime(ymd, '%Y%m%d').strftime('%Y.%m.%d')
 
 
-stackSubject = []
-topMessage = ""
+stack_subject = []
+top_message = ""
 message = []
 
-topMessage += "[대림식 알림]\n"
-topMessage += "\n"
-topMessage += f"{today.year}년 {today.month}월 학사일정입니다.\n"
-topMessage += "\n"
+top_message += "[대림식 알림]\n"
+top_message += "\n"
+top_message += f"{today.year}년 {today.month}월 학사일정입니다.\n"
+top_message += "\n"
 
-for i in range(len(scheduleData)):
-    if scheduleData[i].get("SUBJECT") is not None:
-        if i < len(scheduleData) - 1:
-            if scheduleData[i + 1].get("SUBJECT") is not None and (
-                    scheduleData[i]["SUBJECT"] == scheduleData[i + 1]["SUBJECT"]):
-                stackSubject.append(scheduleData[i])
+for i in range(len(schedule_data)):
+    if schedule_data[i].get("SUBJECT") is not None:
+        if i < len(schedule_data) - 1:
+            if schedule_data[i + 1].get("SUBJECT") is not None and (
+                    schedule_data[i]["SUBJECT"] == schedule_data[i + 1]["SUBJECT"]):
+                stack_subject.append(schedule_data[i])
             else:
-                if len(stackSubject) != 0:
-                    if scheduleData[i]["SUBJECT"] == stackSubject[len(stackSubject) - 1]["SUBJECT"]:
-                        stackSubject.append(scheduleData[i])
-                        if (stackSubject[0]["M"] == today.month or stackSubject[len(stackSubject) - 1][
+                if len(stack_subject) != 0:
+                    if schedule_data[i]["SUBJECT"] == stack_subject[len(stack_subject) - 1]["SUBJECT"]:
+                        stack_subject.append(schedule_data[i])
+                        if (stack_subject[0]["M"] == today.month or stack_subject[len(stack_subject) - 1][
                             "M"] == today.month):
                             message.append(
-                                f"[{convert_from_ymd(stackSubject[0]['FROM_YMD'])}~{convert_from_ymd(stackSubject[len(stackSubject) - 1]['FROM_YMD'])}]\n{legend(stackSubject[0]['SCH_TYPE'])} | {stackSubject[0]['SUBJECT']}\n\n")
-                            stackSubject = []
+                                f"[{convert_from_ymd(stack_subject[0]['FROM_YMD'])}~{convert_from_ymd(stack_subject[len(stack_subject) - 1]['FROM_YMD'])}]\n{legend(stack_subject[0]['SCH_TYPE'])} | {stack_subject[0]['SUBJECT']}\n\n")
+                            stack_subject = []
                         else:
-                            stackSubject = []
+                            stack_subject = []
                 else:
-                    if scheduleData[i]["M"] == today.month:
+                    if schedule_data[i]["M"] == today.month:
                         message.append(
-                            f"[{convert_from_ymd(scheduleData[i]['FROM_YMD'])}]\n{legend(scheduleData[i]['SCH_TYPE'])} | {scheduleData[i]['SUBJECT']}\n\n")
+                            f"[{convert_from_ymd(schedule_data[i]['FROM_YMD'])}]\n{legend(schedule_data[i]['SCH_TYPE'])} | {schedule_data[i]['SUBJECT']}\n\n")
         else:
-            if len(stackSubject) != 0:
-                if scheduleData[i - 1].get("SUBJECT") is not None and (
-                        scheduleData[i]["SUBJECT"] == scheduleData[i - 1]["SUBJECT"]):
-                    stackSubject.append(scheduleData[i])
-                    if (stackSubject[0]["M"] == today.month or stackSubject[len(stackSubject) - 1]["M"] == today.month):
+            if len(stack_subject) != 0:
+                if schedule_data[i - 1].get("SUBJECT") is not None and (
+                        schedule_data[i]["SUBJECT"] == schedule_data[i - 1]["SUBJECT"]):
+                    stack_subject.append(schedule_data[i])
+                    if (stack_subject[0]["M"] == today.month or stack_subject[len(stack_subject) - 1][
+                        "M"] == today.month):
                         message.append(
-                            f"[{convert_from_ymd(stackSubject[0]['FROM_YMD'])}~{convert_from_ymd(stackSubject[len(stackSubject) - 1]['FROM_YMD'])}]\n{legend(stackSubject[0]['SCH_TYPE'])} | {stackSubject[0]['SUBJECT']}\n\n")
-                        stackSubject = []
+                            f"[{convert_from_ymd(stack_subject[0]['FROM_YMD'])}~{convert_from_ymd(stack_subject[len(stack_subject) - 1]['FROM_YMD'])}]\n{legend(stack_subject[0]['SCH_TYPE'])} | {stack_subject[0]['SUBJECT']}\n\n")
+                        stack_subject = []
                     else:
-                        stackSubject = []
+                        stack_subject = []
             else:
-                if scheduleData[i]["M"] == today.month:
+                if schedule_data[i]["M"] == today.month:
                     message.append(
-                        f"[{convert_from_ymd(scheduleData[i]['FROM_YMD'])}]\n{legend(scheduleData[i]['SCH_TYPE'])} | {scheduleData[i]['SUBJECT']}\n\n")
+                        f"[{convert_from_ymd(schedule_data[i]['FROM_YMD'])}]\n{legend(schedule_data[i]['SCH_TYPE'])} | {schedule_data[i]['SUBJECT']}\n\n")
 
-for item in uniquifiedScheduleListData:
+for item in uniquified_schedule_list_data:
     if int(item["START_M"]) <= today.month <= int(item["END_M"]) and int(item["START_Y"]) <= today.year <= int(
             item["END_Y"]):
         if item["START_D"] == item["END_D"] and item["START_M"] == item["END_M"] and item["START_Y"] == item["END_Y"]:
@@ -134,4 +135,4 @@ if not os.path.isdir(PATH_SCHEDULE):
     os.makedirs(PATH_SCHEDULE)
 
 with open(f"{PATH_SCHEDULE}/m_schedule.json", 'w') as outfile:
-    json.dump(output(topMessage + ''.join(sorted(message, key=lambda x: x[:12]))), outfile, ensure_ascii=False)
+    json.dump(output(top_message + ''.join(sorted(message, key=lambda x: x[:12]))), outfile, ensure_ascii=False)
